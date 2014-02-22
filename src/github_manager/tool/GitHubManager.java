@@ -65,7 +65,7 @@ public class GitHubManager implements Tool {
 				public void run() {
 					try {
 						if (frame == null) {
-							frame = new GUIFrame();
+							frame = new GUIFrame(editor);
 						}
 
 					} catch (Exception e) {
