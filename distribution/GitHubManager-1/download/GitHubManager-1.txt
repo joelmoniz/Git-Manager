@@ -8,7 +8,7 @@ name = "GitHub Manager"
 authorList = [Joel Ruben Antony Moniz](http://joelmoniz.com)
 
 # A web page for your tool, NOT a direct link to where to download it.
-url = http://joelmoniz.com/githubmanager
+url = http://joelmoniz.com/github-manager
 
 # The category of your tool, must be one (or many) of the following:
 #   "3D"            "Animation"     "Compilations"      "Data"          
@@ -45,4 +45,4 @@ version = 1  # This must be parsable as an int
 
 # The version as the user will see it. If blank, the version attribute will be 
 # used here.
-prettyVersion = 0.1.0  # This is treated as a String
+prettyVersion = 0.0.1  # This is treated as a String

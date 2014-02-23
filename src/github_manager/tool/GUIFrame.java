@@ -4,15 +4,10 @@ import github_manager.constants.ProjectDetails;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import org.eclipse.jgit.internal.storage.file.FileRepository;
-import org.eclipse.jgit.lib.Repository;
 
 import processing.app.Editor;
 import processing.app.Toolkit;
@@ -20,6 +15,7 @@ import processing.app.Toolkit;
 public class GUIFrame extends JFrame implements ActionListener {
 
 	Editor editor;
+	GitOperations gitops;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -40,34 +36,14 @@ public class GUIFrame extends JFrame implements ActionListener {
 
 		Toolkit.setIcon(this);
 		editor = e;
+		gitops = new GitOperations(editor);
 
 	}
 
-	public void initRepo() {
-		File targetDir = new File(editor.getSketch().getFolder().getAbsolutePath()
-				+ "/.git");
-		if (targetDir.exists())
-			{
-			System.out.println("Repo already exists!");
-			//System.out.println(targetDir.getAbsolutePath());
-			return;
-			}
-		Repository repo;
-		try {
-			repo = new FileRepository(targetDir);
-			repo.create(true);
-			System.out.println("New repo created.");
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
+
 	
 	public void actionPerformed(ActionEvent e) {
-		initRepo();
+		gitops.initRepo();
 	} 
 
-	
-	//Retains the details of the last editor when a new one is opened.
-	// Fix this
 }
