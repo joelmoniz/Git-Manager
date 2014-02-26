@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.GitCommand;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
@@ -14,6 +15,9 @@ import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.PushResult;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 import processing.app.Editor;
 
@@ -35,6 +39,7 @@ public class GitOperations {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	public void initRepo() {
@@ -138,5 +143,33 @@ public class GitOperations {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void pushToRemote(String uname,String pass,String remote)
+	{
+	
+		// Get TransportException when project is >1Mb
+		// Fix this: https://groups.google.com/forum/#!topic/bitbucket-users/OUsa8sb_Ti4
+		CredentialsProvider cp = new UsernamePasswordCredentialsProvider(uname,pass);
+
+		Iterable<PushResult> pc;
+		try {
+			pc = git.push().setRemote(remote).setCredentialsProvider(cp).call();
+			for (PushResult pushResult : pc) {
+				System.out.println(pushResult.getURI());
+				}
+			System.out.println("Push Complete");
+
+		} catch (InvalidRemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransportException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
