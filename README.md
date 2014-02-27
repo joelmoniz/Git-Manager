@@ -1,14 +1,14 @@
-#<div align="center"> <u>GitHub Manager </div></u>
+#<div align="center"> <u>Git Manager </div></u>
 
 >##Objective  
   
->The GitHub Manager is a tool to act as a complete and convenient interface between GitHub and Processing, and to integrate the awesomeness of version control with Processing. It is meant to be able to provide not only all the offline features of Git, but also the power of collaboration and numerous other features that GitHub brings to the table. Though the tool is primarily meant to enable the user to use all of GitHub’s features via the tool,  the user will be provided the flexibility to use the tool for Git operations alone, if he/she so chooses (for example, add, commit, branch, etc.)
+>The Git Manager is a tool to act as a complete and convenient interface between GitHub and Processing, and to integrate the awesomeness of version control with Processing. It is meant to be able to provide not only all the offline features of Git, but also the power of collaboration and numerous other features that GitHub brings to the table. Though the tool is primarily meant to enable the user to use all of GitHub’s features via the tool,  the user will be provided the flexibility to use the tool for Git operations alone, if he/she so chooses (for example, add, commit, branch, etc.). The tool's webpage maybe viewed [**here**](http://joelmoniz.com/git-manager/).
 
 >##Installation Instructions
->To use GitHub Manager from within the Processing IDE (like a normal tool), do the following:
+>To use Git Manager from within the Processing IDE (like a normal tool), do the following:
 >
 * Create a folder named "tools" inside your Sketchbook folder (if not already present). The location of the sketchbook folder is shown in Processing's Preferences dialog.
-* Extract GitHubManager.zip present in "distribution/GitHubManager-1/download" into the "tools" folder.
+* Extract GitManager.zip present in "distribution/GitManager-1/download" into the "tools" folder. Ensure that in the tools folder, GitManager folder has src, tools, etc. within it, and not another sub-folder named GitManager.  
 * Restart Processing
 
 
