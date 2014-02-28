@@ -2,11 +2,11 @@ package git_manager.tool;
 
 import git_manager.constants.ProjectDetails;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,12 +28,24 @@ public class GUIFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	public GUIFrame(Editor e) {
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		// TODO Git Tool can be opened only once per processing sketch. Rectify.
+
+		// setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		// setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setBounds(200, 200, 400, 400);
+		// setPreferredSize(new Dimension(400, 400));
 		setResizable(true);
 		setTitle(ProjectDetails.NAME);
+		setVisible(true);
+
+		// GitOptionToolbar tool = new
+		// GitOptionToolbar(editor,editor.getBase());
+
+		GitOptionToolbar tool = new GitOptionToolbar();
+
 		panel = new JPanel(null);
 		add(panel);
+		panel.add(tool, BorderLayout.PAGE_START);
 		setContentPane(panel);
 		this.setVisible(true);
 
@@ -70,6 +82,13 @@ public class GUIFrame extends JFrame implements ActionListener {
 		Toolkit.setIcon(this);
 		editor = e;
 		gitops = new GitOperations(editor);
+
+		// this.addWindowListener(new WindowAdapter() {
+		// // Invoked when a window is in the process of being closed.
+		// public void windowClosing(WindowEvent e) {
+		// dispose();
+		// }
+		// });
 
 	}
 
