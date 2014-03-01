@@ -38,10 +38,10 @@ public class GUIFrame extends JFrame implements ActionListener {
 		setTitle(ProjectDetails.NAME);
 		setVisible(true);
 
-		// GitOptionToolbar tool = new
-		// GitOptionToolbar(editor,editor.getBase());
+		 GitOptionToolbar tool = new
+		 GitOptionToolbar(e,e.getBase());  // push this down, change e to editor
 
-		GitOptionToolbar tool = new GitOptionToolbar();
+//		GitOptionToolbar tool = new GitOptionToolbar();
 
 		panel = new JPanel(null);
 		add(panel);
