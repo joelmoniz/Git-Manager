@@ -35,7 +35,7 @@ import processing.app.tools.Tool;
 public class GitManager implements Tool {
 
 	Editor editor;
-	GUIFrame frame;
+	static GUIFrame frame;
 
 	public String getMenuTitle() {
 		return "Git Manager";
@@ -46,26 +46,24 @@ public class GitManager implements Tool {
 	}
 
 	public void run() {
-		System.out
-				.println("*-----*-----*-----*-----*-----*-----*-----*-----*-----*\n"
-						+ "|	       "
-						+ ProjectDetails.NAME
-						+ " v"
-						+ ProjectDetails.VERSION
-						+ "    	   |\n"
-						+ "*-----*-----*-----*-----*-----*-----*-----*-----*-----*\n"
-
-				);
-
 		try {
 
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
 						if (frame == null) {
+							System.out
+									.println("*-----*-----*-----*-----*-----*-----*-----*-----*-----*\n"
+											+ "|	       "
+											+ ProjectDetails.NAME
+											+ " v"
+											+ ProjectDetails.VERSION
+											+ "    	   |\n"
+											+ "*-----*-----*-----*-----*-----*-----*-----*-----*-----*\n"
+
+									);
 							frame = new GUIFrame(editor);
 						}
-
 					} catch (Exception e) {
 						System.err
 								.println("Exception at GitManager.run() - invokeLater - run");
@@ -74,8 +72,7 @@ public class GitManager implements Tool {
 				}
 			});
 		} catch (Exception eOuter) {
-			System.err
-					.println("Exception at GitManager.run() - invokeLater");
+			System.err.println("Exception at GitManager.run() - invokeLater");
 			eOuter.printStackTrace();
 		}
 	}
