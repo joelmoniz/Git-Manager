@@ -34,44 +34,51 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 	private void populateToolBar() {
 		// TODO Auto-generated method stub
 		JButton b = new JButton();
+		b.setToolTipText("Initialize repo");
 		// this.add(b);
-		
-		Dimension d = new Dimension(this.getHeight(), this.getHeight());
-		b.setPreferredSize(d);
+		/*
+		 * ImageIcon init = null; try { init = new
+		 * ImageIcon(("src\\gitinit.png")); } catch (NullPointerException n) {
+		 * System.out.println("Null pointer exception"); }
+		 */
+
+	//	ImageIcon init = createImageIcon("gitinit.png", "git init Icon");
+
+	//	Dimension d = new Dimension(init.getIconWidth(), init.getIconHeight());
+//		b.setPreferredSize(d);
 		// b.setSize(this.getHeight(), this.getHeight());
-//		String imgLocation = File.separator + ".." + File.separator + ".."
-//				+ File.separator + ".." + File.separator + "data" + File.separator +"gitinit"
-//				+ ".png";
-		String imgLocation = "gitinit.png";
-//		ImageIcon init = new ImageIcon(loadImage(imgLocation));
+		// String imgLocation = File.separator + ".." + File.separator + ".."
+		// + File.separator + ".." + File.separator + "data" + File.separator
+		// +"gitinit"
+		// + ".png";
+		String imgLocation = "git_manager/tool/gitinit.png";
+		// ImageIcon init = new ImageIcon(loadImage(imgLocation));
+
+		// btnStick.setIcon(new
+		// javax.swing.ImageIcon(getClass().getResource("/g4p/toolStick.png")));
 		
-//		btnStick.setIcon(new javax.swing.ImageIcon(getClass().getResource("/g4p/toolStick.png")));
+		/*
 		b.setPreferredSize(d);
 		b.setMinimumSize(d);
 		b.setMaximumSize(d);
+*/
+	//	if (init != null)
+	//		b.setIcon(init);
 		
-		try{
-		ImageIcon init = new ImageIcon(getClass().getResource("gitinit.png"));
-		b.setIcon(init);
-		}
-		catch(NullPointerException n)
-		{
-			System.out.println("Null pointer exception");
-		}
-		System.out.println(b.getIcon());
-		this.revalidate();  
-		this.repaint(); 
+		//System.out.println(b.getIcon());
+		
+		// this.revalidate();
+		// this.repaint();
 
 		this.add(b);
-//		JButton button = new JButton(new ImageIcon(
-//				(init.getImage()).getScaledInstance(2*this.getHeight(),
-//						2*this.getHeight(), java.awt.Image.SCALE_SMOOTH)));
-		
-		
+		// JButton button = new JButton(new ImageIcon(
+		// (init.getImage()).getScaledInstance(2*this.getHeight(),
+		// 2*this.getHeight(), java.awt.Image.SCALE_SMOOTH)));
+
 		JButton button = new JButton("a");
-		button.setPreferredSize(d);
-		button.setMinimumSize(d);
-		button.setMaximumSize(d);
+//		button.setPreferredSize(d);
+//		button.setMinimumSize(d);
+//		button.setMaximumSize(d);
 		this.add(button);
 
 		// JComponent jLabel4 = new JLabel();
@@ -94,7 +101,7 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 			return new ImageIcon(theFilename).getImage();
 		} else {
 			URL img = this.getClass().getResource(getPath(theFilename));
-			if (img==null)
+			if (img == null)
 				System.out.println("Danger");
 			return new ImageIcon(img).getImage();
 		}
@@ -113,8 +120,25 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 
 	}
 
+	protected ImageIcon createImageIcon(String path, String description) {
+		java.net.URL imgURL;
+		try{
+		imgURL = GitOptionToolbar.class.getResource(path);
+		}
+		catch(NullPointerException n)
+		{
+			imgURL = null;
+			System.out.println("null");
+		}
+		if (imgURL != null) {
+			System.out.println("Found " + path);
+			return new ImageIcon(imgURL, description);
+		} else {
+			System.err.println("Couldn't find file: " + path);
+			return null;
+		}
+	}
 }
-
 // @SuppressWarnings("serial")
 // public class GitOptionToolbar extends JavaToolbar {
 //

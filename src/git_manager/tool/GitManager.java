@@ -35,7 +35,7 @@ import processing.app.tools.Tool;
 public class GitManager implements Tool {
 
 	Editor editor;
-	static GUIFrame frame;
+	static GitGUIFrame frame;
 
 	public String getMenuTitle() {
 		return "Git Manager";
@@ -62,7 +62,7 @@ public class GitManager implements Tool {
 											+ "*-----*-----*-----*-----*-----*-----*-----*-----*-----*\n"
 
 									);
-							frame = new GUIFrame(editor);
+							frame = new GitGUIFrame(editor);
 						}
 					} catch (Exception e) {
 						System.err
