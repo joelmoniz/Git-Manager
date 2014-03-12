@@ -52,7 +52,20 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 		// +"gitinit"
 		// + ".png";
 		String imgLocation = "git_manager/tool/gitinit.png";
+		System.out.println(this.getClass().getResource("/data/toolbar/logos/gitinit.png").getPath());
 		// ImageIcon init = new ImageIcon(loadImage(imgLocation));
+		// some other function that executes during runtime
+//		ImageIcon init = createImageIcon("/data/toolbar/logos/gitinit.png", "git init Icon");
+
+	System.out.println("-------------------------------------");
+	ImageIcon init = new ImageIcon(this.getClass().getResource("/data/toolbar/logos/gitinit.png"));
+//	loadImage("gitinit.png");
+	
+//	b.setIcon(new ImageIcon(("src\\gitinit.png")));
+	b.setIcon(init);
+	System.out.println(b.getIcon());
+
+
 
 		// btnStick.setIcon(new
 		// javax.swing.ImageIcon(getClass().getResource("/g4p/toolStick.png")));
@@ -96,23 +109,6 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 	// return new PImage(loadImage(theFilename));
 	// }
 
-	public Image loadImage(String theFilename) {
-		if (theFilename.startsWith(File.separator)) {
-			return new ImageIcon(theFilename).getImage();
-		} else {
-			URL img = this.getClass().getResource(getPath(theFilename));
-			if (img == null)
-				System.out.println("Danger");
-			return new ImageIcon(img).getImage();
-		}
-	}
-
-	public String getPath(String theFilename) {
-		if (theFilename.startsWith("/")) {
-			return theFilename;
-		}
-		return File.separator + "data" + File.separator + theFilename;
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -120,10 +116,29 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 
 	}
 
-	protected ImageIcon createImageIcon(String path, String description) {
+	public Image loadImage(String theFilename) {
+		if (theFilename.startsWith(File.separator)) {
+			return new ImageIcon(theFilename).getImage();
+		} else {
+			URL img;
+			try{
+			img = this.getClass().getResource(getPath(theFilename));
+			return new ImageIcon(img).getImage();
+			}
+			catch (NullPointerException n)
+			{
+				//System.out.println("Null pointer Exception");
+				n.printStackTrace();
+				return null;
+			}
+		}
+	}
+
+		protected ImageIcon createImageIcon(String path, String description) {
 		java.net.URL imgURL;
 		try{
-		imgURL = GitOptionToolbar.class.getResource(path);
+		//imgURL = GitOptionToolbar.class.getResource(path);
+			imgURL = GitOptionToolbar.class.getClass().getResource(path);
 		}
 		catch(NullPointerException n)
 		{
@@ -137,6 +152,13 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 			System.err.println("Couldn't find file: " + path);
 			return null;
 		}
+	}
+
+	public String getPath(String theFilename) {
+		if (theFilename.startsWith("/")) {
+			return theFilename;
+		}
+		return File.separator + "data" + File.separator + theFilename;
 	}
 }
 // @SuppressWarnings("serial")
