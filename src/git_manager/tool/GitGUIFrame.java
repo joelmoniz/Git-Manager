@@ -34,21 +34,14 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	public GitGUIFrame(Editor e) {
-		// TODO Git Tool can be opened only once per processing sketch. Rectify.
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-		// setDefaultCloseOperation(HIDE_ON_CLOSE);
-		
-		//setBounds(200, 200, 400, 400);
 		
 		setPreferredSize(new Dimension(650, 530));
 		setResizable(true);
 		setTitle(ProjectDetails.NAME);
 		setVisible(true);
-
-		// GitOptionToolbar tool = new
-		// GitOptionToolbar(editor,editor.getBase());
-
+		
 		menu = new GitMenuBar();
 		setJMenuBar(menu);
 		
@@ -81,7 +74,6 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		c.weighty = 0;
 		
 		JButton bCreate = new JButton("Click to create repo");
-		//bCreate.setBounds(120, 50, 180, 35);
 		bCreate.addActionListener(this);
 		panel.add(bCreate,c);
 		bCreate.setActionCommand("create");
@@ -92,7 +84,6 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		c.insets = new Insets(0, 0, 3, 0);
 		
 		JButton bSnap = new JButton("Click to \"Take Snapshot\"");
-		//bSnap.setBounds(120, 100, 180, 35);
 		bSnap.addActionListener(this);
 		panel.add(bSnap,c);
 		bSnap.setActionCommand("snapshot");
@@ -103,7 +94,6 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		c.insets = new Insets(0, 0, 3, 0);
 		
 		JButton bAdd = new JButton("Add all files");
-		//bAdd.setBounds(120, 150, 80, 35);
 		bAdd.addActionListener(this);
 		panel.add(bAdd,c);
 		bAdd.setActionCommand("add");
@@ -114,7 +104,6 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		c.insets = new Insets(0, 0, 3, 0);
 		
 		JButton bCommit = new JButton("Commit");
-	//	bCommit.setBounds(220, 150, 80, 35);
 		bCommit.addActionListener(this);
 		panel.add(bCommit,c);
 		bCommit.setActionCommand("commit");
@@ -125,7 +114,6 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		c.insets = new Insets(0, 0, 3, 0);
 		
 		JButton bLogin = new JButton("Push to GitHub");
-//		bLogin.setBounds(120, 200, 180, 35);
 		bLogin.addActionListener(this);
 		panel.add(bLogin,c);
 		bLogin.setActionCommand("push");

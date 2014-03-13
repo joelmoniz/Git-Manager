@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.GitCommand;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
@@ -36,7 +35,6 @@ public class GitOperations {
 		try {
 			git = new Git(new FileRepository(gitDir));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -53,18 +51,13 @@ public class GitOperations {
 			Git.init().setDirectory(thisDir).setBare(false).call();
 			System.out.println("New repo created.");
 		} catch (InvalidRemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransportException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// Retains the details of the last editor when a new one is opened.
-		// Fix this
 	}
 
 	public void initBareRepo() {
@@ -74,7 +67,6 @@ public class GitOperations {
 			repo.create(true);
 			System.out.println("Bare repo created.");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -86,13 +78,10 @@ public class GitOperations {
 					.setDirectory(cloneTo).setBranch("master").setBare(false)
 					.setRemote("origin").setNoCheckout(false).call();
 		} catch (InvalidRemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransportException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -104,7 +93,6 @@ public class GitOperations {
 			git.commit().setMessage(comment).call();
 			System.out.println("Snapshot complete");
 		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -115,7 +103,6 @@ public class GitOperations {
 			git.add().addFilepattern(".").call();
 			System.out.println("All files added");
 		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -125,22 +112,16 @@ public class GitOperations {
 			git.commit().setMessage(comment).call();
 			System.out.println("Commit complete");
 		} catch (NoHeadException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoMessageException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnmergedPathsException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ConcurrentRefUpdateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (WrongRepositoryStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -161,13 +142,10 @@ public class GitOperations {
 			System.out.println("Push Complete");
 
 		} catch (InvalidRemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransportException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (GitAPIException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
