@@ -3,19 +3,19 @@ package git_manager.tool;
 import git_manager.constants.OptionBar;
 import git_manager.constants.ProjectDetails;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,7 +23,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 import processing.app.Editor;
 import processing.app.Toolkit;
@@ -35,7 +34,8 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 	String uName, pass, remote;
 	JPanel panel;
 	GitMenuBar menu;
-
+GitOptionToolbar tool;
+	
 	private static final long serialVersionUID = 1L;
 
 	public GitGUIFrame(Editor e) {
@@ -51,7 +51,7 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		menu = new GitMenuBar();
 		setJMenuBar(menu);
 
-		GitOptionToolbar tool = new GitOptionToolbar();
+		tool = new GitOptionToolbar();
 
 		panel = new JPanel(new GridBagLayout());
 		add(panel);
@@ -69,8 +69,10 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		c.insets = new Insets(0, 0, 5, 0);
 
 		panel.add(tool, c);
-		setContentPane(panel);
+		// setContentPane(panel);
 		this.setVisible(true);
+		
+		setSelectionMenuParameters();
 
 		c.anchor = GridBagConstraints.CENTER;
 		c.fill = GridBagConstraints.NONE;
@@ -138,6 +140,33 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 			}
 		});
 		this.pack();
+
+		this.addComponentListener(new ComponentListener() {
+
+			@Override
+			public void componentShown(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void componentResized(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+				setSelectionMenuParameters();
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 	}
 
 	void getUnameandPass() {
@@ -167,6 +196,14 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 			this.pass = new String(pass.getPassword());
 			this.remote = remote.getText();
 		}
+	}
+
+	void setSelectionMenuParameters() {
+		Point pt = tool.getSelectionMenuLocation();
+		Point pt2 = this.getLocationOnScreen();
+		tool.setSelectionCompX(-pt2.x + pt.x-OptionBar.MODE_GAP_WIDTH);
+		tool.setSelectionCompY(0);
+		System.out.println((-pt2.x+pt.x+tool.modeX1)+" "+(-pt2.y+pt.y+tool.modeY1));
 	}
 
 	public String getMessage(String dialogText) {

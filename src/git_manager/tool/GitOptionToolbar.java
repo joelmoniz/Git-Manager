@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -14,16 +15,21 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToolBar;
 import javax.swing.border.Border;
+import javax.swing.event.MouseInputListener;
 
-public class GitOptionToolbar extends JToolBar implements ActionListener {
+public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 
 	private static final long serialVersionUID = 1L;
 	private final int space1 = 5;
-	private int modeX2, modeX1, modeY1, modeY2;
+	public int modeX2, modeX1, modeY1, modeY2;
+	private int selectionCompX, selectionCompY;
+	private SelectionMenu selectionMenu;
 
 	public GitOptionToolbar() {
 		this.setName("ActionBar");
@@ -33,6 +39,7 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setBackground(Color.black);
 		populateToolBar();
+		addMouseListener(this);
 	}
 
 	private void populateToolBar() {
@@ -55,7 +62,10 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 		// this.add(addButton(OptionBar.GIT_STATUS_ICON,
 		// OptionBar.ACTION_STATUS));
 		// drawModeSelectionMenu("Basic");
-		this.add(new SelectionMenu("Novice"));
+
+		selectionMenu = new SelectionMenu("Novice");
+		this.add(selectionMenu);
+
 	}
 
 	private JButton addButton(String imageLocation, String actionCommand) {
@@ -92,8 +102,7 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 			// the following few pieces of code have been adapted from
 			// Processing so as to resemble it
 
-			final int modeGapWidth = 8;
-			final int modeBoxHeight = 6;
+
 
 			FontMetrics metrics = g.getFontMetrics(this.getFont());
 
@@ -101,57 +110,103 @@ public class GitOptionToolbar extends JToolBar implements ActionListener {
 			int modeTextAscent = metrics.getHeight();
 			modeX2 = getWidth() - 46;
 			modeX1 = modeX2
-					- (modeGapWidth + modeTextWidth + modeGapWidth
-							+ OptionBar.ARROW_WIDTH + modeGapWidth);
-			// modeY1 = 8; //(getHeight() - modeBoxHeight) / 2;
-			modeY1 = (getHeight() - 4 * modeBoxHeight) / 2;
-			modeY2 = modeY1 + modeBoxHeight + modeTextAscent; // modeY1 + modeH
-																// + modeGapV*2;
+					- (OptionBar.MODE_GAP_WIDTH + modeTextWidth + OptionBar.MODE_GAP_WIDTH
+							+ OptionBar.ARROW_WIDTH + OptionBar.MODE_GAP_WIDTH);
+			modeY1 = (getHeight() - 4 * OptionBar.MODE_BOX_HEIGHT) / 2;
+			modeY2 = modeY1 + OptionBar.MODE_BOX_HEIGHT + modeTextAscent;
 			// g.setColor(modeButtonColor);
 			g.drawRect(modeX1, modeY1, modeX2 - modeX1, modeY2 - modeY1 - 1);
-			g.drawString(menuTitle, modeX1 + modeGapWidth, modeY1
-					+ (modeBoxHeight + modeTextAscent) / 2 + modeTextAscent / 3);
+			g.drawString(menuTitle, modeX1 + OptionBar.MODE_GAP_WIDTH, modeY1
+					+ (OptionBar.MODE_BOX_HEIGHT + modeTextAscent) / 2 + modeTextAscent / 3);
 			g.drawImage(
 					new ImageIcon((this.getClass()
 							.getResource(OptionBar.MODE_MENU_ARROW)))
 							.getImage(), modeX2 - OptionBar.ARROW_WIDTH
-							- modeGapWidth, modeY1 + 1
+							- OptionBar.MODE_GAP_WIDTH, modeY1 + 1
 							+ (modeY2 - modeY1 - 1 - OptionBar.ARROW_HEIGHT)
 							/ 2, OptionBar.ARROW_WIDTH, OptionBar.ARROW_HEIGHT,
 					null);
+
 		}
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void mousePressed(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		 System.out.println("clicked x,y: "+x+" "+y);
+		if (x > selectionCompX + modeX1 && x < selectionCompX + modeX2
+				&& y > selectionCompY + modeY1 && y < selectionCompY + modeY2) {
+			JPopupMenu popup = new JPopupMenu("Expertise Level");
 
+
+			JRadioButtonMenuItem item = new JRadioButtonMenuItem("Novice");
+			// doesn't need a listener, since it doesn't do anything
+			item.setSelected(true);
+			popup.add(item);
+
+			JMenuItem item2 = new JMenuItem("Pro");
+			item2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+				}
+			});
+			popup.add(item2);
+			popup.setVisible(true);
+			popup.show(e.getComponent(), x, y);
+			popup.requestFocus();
+		}
 	}
 
-	public void mousePressed(MouseEvent e) {
-		// ignore mouse presses so hitting 'run' twice doesn't cause problems
-		if (isEnabled()) {
-			int x = e.getX();
-			int y = e.getY();
-			if (x > modeX1 && x < modeX2 && y > modeY1 && y < modeY2) {
-				JPopupMenu popup = new JPopupMenu("test");
-				// popup.add(popup);
-				popup.show(this, x, y);
-			}
-			/*
-			 * // Need to reset the rollover here. If the window isn't active,
-			 * // the rollover wouldn't have been updated. //
-			 * http://code.google.com/p/processing/issues/detail?id=561
-			 * checkRollover(x, y); if (rollover != null) {
-			 * //handlePressed(rollover); handlePressed(e,
-			 * buttons.indexOf(rollover)); }
-			 */
-		}
+	public void setSelectionCompX(int selectionCompX) {
+		this.selectionCompX = selectionCompX;
+	}
+
+	public void setSelectionCompY(int selectionCompY) {
+		this.selectionCompY = selectionCompY;
+	}
+
+	public Point getSelectionMenuLocation() {
+		return this.selectionMenu.getLocationOnScreen();
 	}
 
 	@Override
 	public boolean isRollover() {
-		// TODO Auto-generated method stub
 		return super.isRollover();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

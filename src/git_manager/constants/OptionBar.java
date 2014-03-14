@@ -38,6 +38,9 @@ public class OptionBar {
 	// from
 	// processing
 
-	public final static int ARROW_WIDTH = 7;
-	public final static int ARROW_HEIGHT = 6;
+	public static final int ARROW_WIDTH = 7;
+	public static final int ARROW_HEIGHT = 6;
+	
+	public static final int MODE_GAP_WIDTH = 8;
+	public static final int MODE_BOX_HEIGHT = 6;
 }

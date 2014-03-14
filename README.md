@@ -10,7 +10,17 @@
 * Create a folder named "tools" inside your Sketchbook folder (if not already present). The location of the sketchbook folder is shown in Processing's Preferences dialog.
 * Extract GitManager.zip present in "distribution/GitManager-1/download" into the "tools" folder. Ensure that in the tools folder, GitManager folder has src, tools, etc. within it, and not another sub-folder named GitManager.  
 * Restart Processing
-
+  
+>##Sources  
+  
+>The following is a list of sources that are being (or have been) used while creating this tool. Though the tool is not complete, this lost will keep building up as the tool progresses so that I don't miss a source out:  
+>
+* [Processing Source Code](https://github.com/processing/processing)  
+>Since I wanted the look and feel of Git Manager to be similar to Processing, a significant part of especially the Expertise Level Menu have been done with Processing's source-code used as a reference.
+* [StackOverflow](http://stackoverflow.com/)  
+>For every time I get stuck... If I listed down the number of times I've (already) opened this web-site when creating this tool, I'd probably spend a good half-an-hour counting :p  
+* [Online Java Documentation](http://docs.oracle.com/javase/tutorial/uiswing/)  
+>For every single time that I forget a complicated syntax :)
 
 <!---
 The following describes how to set up a Processing tool project in Eclipse and build it successfully, and to make your tool ready for distribution.
