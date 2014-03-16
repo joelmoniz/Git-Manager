@@ -14,7 +14,7 @@ public class GitMenuBar extends JMenuBar {
 		onlineRepos = new JMenu("Online Repos");
 		settings = new JMenu("Settings");
 		help = new JMenu("Help");
-		
+
 		congiureMenus();
 
 	}
@@ -32,7 +32,10 @@ public class GitMenuBar extends JMenuBar {
 		this.add(help);
 	}
 
-	private void populateHelpMenu() {
+	// TODO: Fill this up, and give options proper names
+	// This is only a list as and when it comes into my mind for now, not
+	// necessarily complete nor necessarily sufficiently meaningful
+	private void populateGitMenu() {
 		JMenuItem init = new JMenuItem("Initialize repo");
 		JMenuItem add = new JMenuItem("Add");
 		JMenuItem commit = new JMenuItem("Commit");
@@ -42,6 +45,13 @@ public class GitMenuBar extends JMenuBar {
 		JMenuItem revert = new JMenuItem("Revert");
 		JMenuItem remove = new JMenuItem("Remove");
 		JMenuItem status = new JMenuItem("Status");
+		JMenuItem ignore = new JMenuItem("Git Ignore");
+		JMenuItem rebase = new JMenuItem("Rebase");
+		JMenuItem stash = new JMenuItem("Save into Stash");
+		JMenuItem stash_list = new JMenuItem("View Stash");
+		JMenuItem stash_apply = new JMenuItem("Apply Stashed Changes");
+		JMenuItem branch = new JMenuItem("Create Branch");
+		JMenuItem checkout = new JMenuItem("Change Branch");
 
 		git.add(init);
 		git.add(snapshot);
@@ -52,7 +62,13 @@ public class GitMenuBar extends JMenuBar {
 		git.add(push);
 		git.add(revert);
 		git.add(remove);
-
+		git.add(ignore);
+		git.add(rebase);
+		git.add(stash);
+		git.add(stash_list);
+		git.add(stash_apply);
+		git.add(branch);
+		git.add(checkout);
 	}
 
 	private void populateSettingsMenu() {
@@ -63,7 +79,7 @@ public class GitMenuBar extends JMenuBar {
 
 	}
 
-	private void populateGitMenu() {
+	private void populateHelpMenu() {
 
 	}
 

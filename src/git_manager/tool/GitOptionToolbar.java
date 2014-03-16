@@ -2,6 +2,7 @@ package git_manager.tool;
 
 import git_manager.constants.OptionBar;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -179,7 +180,9 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 	public void mousePressed(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
+
 		System.out.println("clicked x,y: " + x + " " + y);
+
 		if (x > elmX1 && x < elmX2 && y > elmY1 && y < elmY2) {
 			JPopupMenu popup = new JPopupMenu("Expertise Level");
 
@@ -195,6 +198,44 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 				}
 			});
 			popup.add(item2);
+			popup.setVisible(true);
+			popup.show(e.getComponent(), x, y);
+			popup.requestFocus();
+		}
+
+		if (x > rsmX1 && x < rsmX2 && y > rsmY1 && y < rsmY2) {
+			JPopupMenu popup = new JPopupMenu("Repo Selection");
+			popup.setLayout(new BorderLayout());
+			
+			JMenuItem item = new JMenuItem(new ImageIcon(this.getClass()
+					.getResource(OptionBar.REPO_GITHUB)));
+			// doesn't need a listener, since it doesn't do anything
+			item.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+				}
+			});
+			popup.add(item,BorderLayout.LINE_START);
+
+			JMenuItem item2 = new JMenuItem(new ImageIcon(this.getClass()
+					.getResource(OptionBar.REPO_GOOGLE_PROJ_HOST)));
+			item2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+				}
+			});
+			popup.add(item2,BorderLayout.CENTER);
+
+			JMenuItem item3 = new JMenuItem(new ImageIcon(this.getClass()
+					.getResource(OptionBar.REPO_BITBUCKET)));
+			item3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+
+				}
+			});
+			popup.add(item3,BorderLayout.LINE_END);
+
+			popup.pack();
 			popup.setVisible(true);
 			popup.show(e.getComponent(), x, y);
 			popup.requestFocus();

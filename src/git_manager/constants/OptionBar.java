@@ -4,6 +4,8 @@ public class OptionBar {
 	public static final String TOOL_ICON_PATH = "/data/toolbar/";
 	public static final String NOVICE_TOOL_ICON_PATH = TOOL_ICON_PATH
 			+ "novice/";
+	public static final String ONLINE_REPO_ICON_PATH = TOOL_ICON_PATH
+			+ "logos/";
 
 	public static final String GIT_INIT_ICON = NOVICE_TOOL_ICON_PATH
 			+ "gitinit.png";
@@ -22,6 +24,13 @@ public class OptionBar {
 	public static final String GIT_SNAP_ICON = NOVICE_TOOL_ICON_PATH
 			+ "snapshot.png";
 
+	public static final String REPO_BITBUCKET = ONLINE_REPO_ICON_PATH
+			+ "bitbucket_logo.png";
+	public static final String REPO_GITHUB = ONLINE_REPO_ICON_PATH
+			+ "GitHub-Mark-120px-plus.png";
+	public static final String REPO_GOOGLE_PROJ_HOST = ONLINE_REPO_ICON_PATH
+			+ "gph.png";
+
 	public static final String ACTION_INIT = "GIT_INIT";
 	public static final String ACTION_ADD = "GIT_ADD";
 	public static final String ACTION_DIFF = "GIT_DIFF";
@@ -38,8 +47,8 @@ public class OptionBar {
 	public static final String DESCRIP_REVERT = "Undo Commits";
 	public static final String DESCRIP_RM = "Remove Files";
 	public static final String DESCRIP_STATUS = "Show Working Tree Status";
-	public static final String DESCRIP_SNAP = "Save Working Tree State";	
-	
+	public static final String DESCRIP_SNAP = "Save Working Tree State";
+
 	public static final String MODE_MENU_ARROW = TOOL_ICON_PATH
 			+ "mode-arrow.png"; // Mode
 	// arrow
@@ -49,7 +58,7 @@ public class OptionBar {
 
 	public static final int ARROW_WIDTH = 7;
 	public static final int ARROW_HEIGHT = 6;
-	
+
 	public static final int MODE_GAP_WIDTH = 8;
 	public static final int MODE_BOX_HEIGHT = 6;
 }
