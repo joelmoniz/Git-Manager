@@ -1,6 +1,5 @@
 package git_manager.tool;
 
-import git_manager.constants.OptionBar;
 import git_manager.constants.ProjectDetails;
 
 import java.awt.Dimension;
@@ -8,11 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -34,15 +30,17 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 	String uName, pass, remote;
 	JPanel panel;
 	GitMenuBar menu;
-GitOptionToolbar tool;
-	
+	GitOptionToolbar tool;
+//	static Point frameLocation;
+
 	private static final long serialVersionUID = 1L;
 
 	public GitGUIFrame(Editor e) {
 
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
-		setMinimumSize(new Dimension(600, 500));
+		// setMinimumSize(new Dimension(600, 500));
+		setMinimumSize(new Dimension(650, 530));
 		setPreferredSize(new Dimension(650, 530));
 		setResizable(true);
 		setTitle(ProjectDetails.NAME);
@@ -69,10 +67,7 @@ GitOptionToolbar tool;
 		c.insets = new Insets(0, 0, 5, 0);
 
 		panel.add(tool, c);
-		// setContentPane(panel);
 		this.setVisible(true);
-		
-		setSelectionMenuParameters();
 
 		c.anchor = GridBagConstraints.CENTER;
 		c.fill = GridBagConstraints.NONE;
@@ -140,32 +135,31 @@ GitOptionToolbar tool;
 			}
 		});
 		this.pack();
-
-		this.addComponentListener(new ComponentListener() {
-
-			@Override
-			public void componentShown(ComponentEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void componentResized(ComponentEvent arg0) {
-				// TODO Auto-generated method stub
-				setSelectionMenuParameters();
-			}
-
-			@Override
-			public void componentMoved(ComponentEvent arg0) {
-				// TODO Auto-generated method stub
-			}
-
-			@Override
-			public void componentHidden(ComponentEvent arg0) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+		
+//		frameLocation = getLocationOnScreen();
+//
+//		this.addComponentListener(new ComponentListener() {
+//
+//			@Override
+//			public void componentShown(ComponentEvent arg0) {
+//				frameLocation = getLocationOnScreen();
+//			}
+//
+//			@Override
+//			public void componentResized(ComponentEvent arg0) {
+//				frameLocation = getLocationOnScreen();
+//			}
+//
+//			@Override
+//			public void componentMoved(ComponentEvent arg0) {
+//				frameLocation = getLocationOnScreen();
+//			}
+//
+//			@Override
+//			public void componentHidden(ComponentEvent arg0) {
+//
+//			}
+//		});
 
 	}
 
@@ -196,14 +190,6 @@ GitOptionToolbar tool;
 			this.pass = new String(pass.getPassword());
 			this.remote = remote.getText();
 		}
-	}
-
-	void setSelectionMenuParameters() {
-		Point pt = tool.getSelectionMenuLocation();
-		Point pt2 = this.getLocationOnScreen();
-		tool.setSelectionCompX(-pt2.x + pt.x-OptionBar.MODE_GAP_WIDTH);
-		tool.setSelectionCompY(0);
-		System.out.println((-pt2.x+pt.x+tool.modeX1)+" "+(-pt2.y+pt.y+tool.modeY1));
 	}
 
 	public String getMessage(String dialogText) {

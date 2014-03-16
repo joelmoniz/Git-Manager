@@ -31,6 +31,15 @@ public class OptionBar {
 	public static final String ACTION_STATUS = "GIT_STATUS";
 	public static final String ACTION_SNAP = "GIT_SNAP";
 
+	public static final String DESCRIP_INIT = "Create Repo";
+	public static final String DESCRIP_ADD = "Stage Files";
+	public static final String DESCRIP_DIFF = "Show Changes";
+	public static final String DESCRIP_PUSH = "Push to Online Repo";
+	public static final String DESCRIP_REVERT = "Undo Commits";
+	public static final String DESCRIP_RM = "Remove Files";
+	public static final String DESCRIP_STATUS = "Show Working Tree Status";
+	public static final String DESCRIP_SNAP = "Save Working Tree State";	
+	
 	public static final String MODE_MENU_ARROW = TOOL_ICON_PATH
 			+ "mode-arrow.png"; // Mode
 	// arrow
