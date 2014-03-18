@@ -18,6 +18,7 @@ import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
+import processing.app.Base;
 import processing.app.Editor;
 
 public class GitOperations {
@@ -29,8 +30,12 @@ public class GitOperations {
 
 	public GitOperations(Editor editor) {
 		this.editor = editor;
-		gitDir = new File(editor.getSketch().getFolder().getAbsolutePath()
-				+ "\\.git");
+		if (Base.isLinux())
+			gitDir = new File(editor.getSketch().getFolder().getAbsolutePath()
+					+ "/.git");
+		else
+			gitDir = new File(editor.getSketch().getFolder().getAbsolutePath()
+					+ "\\.git");
 		thisDir = new File(editor.getSketch().getFolder().getAbsolutePath());
 		try {
 			git = new Git(new FileRepository(gitDir));
@@ -57,7 +62,6 @@ public class GitOperations {
 		} catch (GitAPIException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public void initBareRepo() {
@@ -125,20 +129,21 @@ public class GitOperations {
 			e.printStackTrace();
 		}
 	}
-	
-	public void pushToRemote(String uname,String pass,String remote)
-	{
-	
+
+	public void pushToRemote(String uname, String pass, String remote) {
+
 		// Get TransportException when project is >1Mb
-		// Fix this: https://groups.google.com/forum/#!topic/bitbucket-users/OUsa8sb_Ti4
-		CredentialsProvider cp = new UsernamePasswordCredentialsProvider(uname,pass);
+		// Fix this:
+		// https://groups.google.com/forum/#!topic/bitbucket-users/OUsa8sb_Ti4
+		CredentialsProvider cp = new UsernamePasswordCredentialsProvider(uname,
+				pass);
 
 		Iterable<PushResult> pc;
 		try {
 			pc = git.push().setRemote(remote).setCredentialsProvider(cp).call();
 			for (PushResult pushResult : pc) {
 				System.out.println(pushResult.getURI());
-				}
+			}
 			System.out.println("Push Complete");
 
 		} catch (InvalidRemoteException e) {
@@ -148,6 +153,6 @@ public class GitOperations {
 		} catch (GitAPIException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 }
