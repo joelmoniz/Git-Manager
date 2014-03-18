@@ -23,7 +23,25 @@ public class OptionBar {
 			+ "gitstatus.png";
 	public static final String GIT_SNAP_ICON = NOVICE_TOOL_ICON_PATH
 			+ "snapshot.png";
+	
 
+	public static final String GIT_INIT_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
+	+ "gitinit_selected.png";
+public static final String GIT_ADD_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
+	+ "gitadd_selected.png";
+public static final String GIT_DIFF_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
+	+ "gitdiff_selected.png";
+public static final String GIT_PUSH_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
+	+ "gitpush_selected.png";
+public static final String GIT_REVERT_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
+	+ "gitrevert_selected.png";
+public static final String GIT_RM_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
+	+ "gitrm_selected.png";
+public static final String GIT_STATUS_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
+	+ "gitstatus_selected.png";
+public static final String GIT_SNAP_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
+	+ "snapshot_selected.png";
+	
 	public static final String REPO_BITBUCKET = ONLINE_REPO_ICON_PATH
 			+ "bitbucket_logo.png";
 	public static final String REPO_GITHUB = ONLINE_REPO_ICON_PATH
@@ -50,7 +68,9 @@ public class OptionBar {
 	public static final String DESCRIP_SNAP = "Save Working Tree State";
 
 	public static final String MODE_MENU_ARROW = TOOL_ICON_PATH
-			+ "mode-arrow.png"; // Mode
+			+ "mode-arrow.png"; 
+	public static final String MODE_MENU_ARROW_LINUX = TOOL_ICON_PATH
+			+ "mode-arrow-linux.png"; 
 	// arrow
 	// borrowed
 	// from

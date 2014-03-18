@@ -23,6 +23,8 @@ import javax.swing.JToolBar;
 import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
 
+import processing.app.Base;
+
 public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 
 	private static final long serialVersionUID = 1L;
@@ -41,12 +43,14 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 		this.setBounds(0, 0, 400, 145);
 		this.setVisible(true);
 		this.setFloatable(false);
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
-		this.setBackground(Color.black);
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
 		buttonDescription = new JLabel();
 		buttonDescription.setText("");
-		buttonDescription.setForeground(Color.WHITE);
+		if (Base.isLinux())
+			buttonDescription.setForeground(Color.BLACK);
+		else
+			buttonDescription.setForeground(Color.WHITE);
 		// points = new ArrayList<PointCoordinates>();
 		buttons = new ArrayList<JButton>();
 
@@ -58,25 +62,25 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 	private void populateToolBar() {
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_INIT_ICON, OptionBar.ACTION_INIT,
-				OptionBar.DESCRIP_INIT));
+				OptionBar.DESCRIP_INIT, OptionBar.GIT_INIT_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_SNAP_ICON, OptionBar.ACTION_SNAP,
-				OptionBar.DESCRIP_SNAP));
+				OptionBar.DESCRIP_SNAP, OptionBar.GIT_SNAP_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_DIFF_ICON, OptionBar.ACTION_DIFF,
-				OptionBar.DESCRIP_DIFF));
+				OptionBar.DESCRIP_DIFF, OptionBar.GIT_DIFF_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_PUSH_ICON, OptionBar.ACTION_PUSH,
-				OptionBar.DESCRIP_PUSH));
+				OptionBar.DESCRIP_PUSH, OptionBar.GIT_PUSH_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_REVERT_ICON, OptionBar.ACTION_REVERT,
-				OptionBar.DESCRIP_REVERT));
+				OptionBar.DESCRIP_REVERT, OptionBar.GIT_REVERT_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_RM_ICON, OptionBar.ACTION_RM,
-				OptionBar.DESCRIP_RM));
+				OptionBar.DESCRIP_RM, OptionBar.GIT_RM_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_STATUS_ICON, OptionBar.ACTION_STATUS,
-				OptionBar.DESCRIP_STATUS));
+				OptionBar.DESCRIP_STATUS, OptionBar.GIT_STATUS_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(buttonDescription);
@@ -86,15 +90,19 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 	}
 
 	private JButton addButton(String imageLocation, String actionCommand,
-			String buttonName) {
+			String buttonName, String rolloverImageLocation) {
 		JButton b = new JButton();
 		ImageIcon icon = new ImageIcon(this.getClass().getResource(
 				imageLocation));
+		ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(
+				rolloverImageLocation));
 		// b.setLayout(new BorderLayout());
 		// b.setIcon(icon);
 		// JLabel label = new JLabel(icon);
 		// b.add(label);
 		b.setIcon(icon);
+		b.setRolloverEnabled(true);
+		b.setRolloverIcon(rolloverIcon);
 		// b.setIconTextGap(0);
 		// b.setMargin(new Insets(0, 0, 0, 0));
 		// b.setSize(d);
@@ -115,6 +123,19 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		// try {
+		// UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		// } catch (ClassNotFoundException e) {
+		// e.printStackTrace();
+		// } catch (InstantiationException e) {
+		// e.printStackTrace();
+		// } catch (IllegalAccessException e) {
+		// e.printStackTrace();
+		// } catch (UnsupportedLookAndFeelException e) {
+		// e.printStackTrace();
+		// }
+		this.setOpaque(true);
+		this.setBackground(Color.BLACK);
 		initializeDimensions(g);
 		renderRepoSelectionMenu(g);
 		renderExpertiseLevelMenu(g);
@@ -125,7 +146,25 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 
 	void renderExpertiseLevelMenu(Graphics g) {
 
-		g.setColor(new Color(255, 255, 255));
+		if (Base.isLinux()) {
+			g.setColor(new Color(0, 0, 0));
+			g.drawImage(
+					new ImageIcon((this.getClass()
+							.getResource(OptionBar.MODE_MENU_ARROW_LINUX)))
+							.getImage(), elmX2 - OptionBar.ARROW_WIDTH
+							- OptionBar.MODE_GAP_WIDTH, elmY1 + 1
+							+ (elmY2 - elmY1 - 1 - OptionBar.ARROW_HEIGHT) / 2,
+					OptionBar.ARROW_WIDTH, OptionBar.ARROW_HEIGHT, null);
+		} else {
+			g.setColor(new Color(255, 255, 255));
+			g.drawImage(
+					new ImageIcon((this.getClass()
+							.getResource(OptionBar.MODE_MENU_ARROW)))
+							.getImage(), elmX2 - OptionBar.ARROW_WIDTH
+							- OptionBar.MODE_GAP_WIDTH, elmY1 + 1
+							+ (elmY2 - elmY1 - 1 - OptionBar.ARROW_HEIGHT) / 2,
+					OptionBar.ARROW_WIDTH, OptionBar.ARROW_HEIGHT, null);
+		}
 		g.setFont(this.getFont());
 
 		// the following few pieces of code have been adapted from
@@ -135,25 +174,32 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 		g.drawString("Novice", elmX1 + OptionBar.MODE_GAP_WIDTH, elmY1
 				+ (OptionBar.MODE_BOX_HEIGHT + elmTextAscent) / 2
 				+ elmTextAscent / 3);
-		g.drawImage(
-				new ImageIcon((this.getClass()
-						.getResource(OptionBar.MODE_MENU_ARROW))).getImage(),
-				elmX2 - OptionBar.ARROW_WIDTH - OptionBar.MODE_GAP_WIDTH, elmY1
-						+ 1 + (elmY2 - elmY1 - 1 - OptionBar.ARROW_HEIGHT) / 2,
-				OptionBar.ARROW_WIDTH, OptionBar.ARROW_HEIGHT, null);
 
 	}
 
 	void renderRepoSelectionMenu(Graphics g) {
-		g.setColor(new Color(255, 255, 255));
+		if (Base.isLinux())
+			g.setColor(new Color(0, 0, 0));
+		else
+			g.setColor(new Color(255, 255, 255));
 
 		g.drawRect(rsmX1, rsmY1, rsmX2 - rsmX1, rsmY2 - rsmY1 - 1);
-		g.drawImage(
-				new ImageIcon((this.getClass()
-						.getResource(OptionBar.MODE_MENU_ARROW))).getImage(),
-				rsmX1 + OptionBar.MODE_GAP_WIDTH, rsmY1 + 1
-						+ (rsmY2 - rsmY1 - 1 - OptionBar.ARROW_HEIGHT) / 2,
-				OptionBar.ARROW_WIDTH, OptionBar.ARROW_HEIGHT, null);
+		if (Base.isLinux())
+			g.drawImage(
+					new ImageIcon((this.getClass()
+							.getResource(OptionBar.MODE_MENU_ARROW_LINUX)))
+							.getImage(), rsmX1 + OptionBar.MODE_GAP_WIDTH,
+					rsmY1 + 1 + (rsmY2 - rsmY1 - 1 - OptionBar.ARROW_HEIGHT)
+							/ 2, OptionBar.ARROW_WIDTH, OptionBar.ARROW_HEIGHT,
+					null);
+		else
+			g.drawImage(
+					new ImageIcon((this.getClass()
+							.getResource(OptionBar.MODE_MENU_ARROW)))
+							.getImage(), rsmX1 + OptionBar.MODE_GAP_WIDTH,
+					rsmY1 + 1 + (rsmY2 - rsmY1 - 1 - OptionBar.ARROW_HEIGHT)
+							/ 2, OptionBar.ARROW_WIDTH, OptionBar.ARROW_HEIGHT,
+					null);
 	}
 
 	void initializeDimensions(Graphics g) {
@@ -204,9 +250,9 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 		}
 
 		if (x > rsmX1 && x < rsmX2 && y > rsmY1 && y < rsmY2) {
-			JPopupMenu popup = new JPopupMenu("Repo Selection");
+			JPopupMenu popup = new JPopupMenu("Online Repo Selection");
 			popup.setLayout(new BorderLayout());
-			
+
 			JMenuItem item = new JMenuItem(new ImageIcon(this.getClass()
 					.getResource(OptionBar.REPO_GITHUB)));
 			// doesn't need a listener, since it doesn't do anything
@@ -215,7 +261,11 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 
 				}
 			});
-			popup.add(item,BorderLayout.LINE_START);
+			popup.add(item, BorderLayout.LINE_START);
+
+			// popup.add(Box.createHorizontalStrut(5));
+			// popup.add(new JSeparator(SwingConstants.VERTICAL));
+			// popup.add(Box.createHorizontalStrut(5));
 
 			JMenuItem item2 = new JMenuItem(new ImageIcon(this.getClass()
 					.getResource(OptionBar.REPO_GOOGLE_PROJ_HOST)));
@@ -224,7 +274,11 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 
 				}
 			});
-			popup.add(item2,BorderLayout.CENTER);
+			popup.add(item2, BorderLayout.CENTER);
+
+			// popup.add(Box.createHorizontalStrut(5));
+			// popup.add(new JSeparator(SwingConstants.VERTICAL));
+			// popup.add(Box.createHorizontalStrut(5));
 
 			JMenuItem item3 = new JMenuItem(new ImageIcon(this.getClass()
 					.getResource(OptionBar.REPO_BITBUCKET)));
@@ -233,11 +287,13 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 
 				}
 			});
-			popup.add(item3,BorderLayout.LINE_END);
+			popup.add(item3, BorderLayout.LINE_END);
 
 			popup.pack();
 			popup.setVisible(true);
-			popup.show(e.getComponent(), x, y);
+			popup.show(e.getComponent(), x - 120, y);
+			// TODO: 120 has been hard-coded to push the menu to the left.
+			// Replace with sum of all image widths
 			popup.requestFocus();
 		}
 	}

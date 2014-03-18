@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import processing.app.Base;
 import processing.app.Editor;
 import processing.app.Toolkit;
 
@@ -40,8 +41,15 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		// setMinimumSize(new Dimension(600, 500));
+		if (Base.isLinux())
+		{
+			setMinimumSize(new Dimension(700, 530));
+			setPreferredSize(new Dimension(700, 530));
+		}
+		else {
 		setMinimumSize(new Dimension(650, 530));
 		setPreferredSize(new Dimension(650, 530));
+		}
 		setResizable(true);
 		setTitle(ProjectDetails.NAME);
 		setVisible(true);

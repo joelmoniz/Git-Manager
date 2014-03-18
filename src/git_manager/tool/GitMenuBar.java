@@ -52,6 +52,7 @@ public class GitMenuBar extends JMenuBar {
 		JMenuItem stash_apply = new JMenuItem("Apply Stashed Changes");
 		JMenuItem branch = new JMenuItem("Create Branch");
 		JMenuItem checkout = new JMenuItem("Change Branch");
+		JMenuItem igore = new JMenuItem("Ignore Files");
 
 		git.add(init);
 		git.add(snapshot);
@@ -69,6 +70,7 @@ public class GitMenuBar extends JMenuBar {
 		git.add(stash_apply);
 		git.add(branch);
 		git.add(checkout);
+		git.add(ignore);
 	}
 
 	private void populateSettingsMenu() {

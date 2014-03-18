@@ -58,7 +58,7 @@ public class GitManager implements Tool {
 											+ ProjectDetails.NAME
 											+ " v"
 											+ ProjectDetails.VERSION
-											+ "    	   |\n"
+											+ "    	      	   |\n"
 											+ "*-----*-----*-----*-----*-----*-----*-----*-----*-----*\n"
 
 									);
