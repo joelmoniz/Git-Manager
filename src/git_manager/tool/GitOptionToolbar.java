@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToolBar;
+import javax.swing.SwingWorker;
 import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
 
@@ -375,12 +376,24 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 			System.out.println("Not yet implemented");
 		else if (a.equals(OptionBar.ACTION_PUSH)) {
 			System.out.println("Pushing...");
-			javax.swing.SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
+			// TODO: Design a button different from the current push and the
+			// push that displays on mouseover which remains until the push
+			// action is complete, and then changes back to original push
+			// button
+			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+				@Override
+				public Void doInBackground() {
 					gitops.getUnameandPass();
 					gitops.pushToRemote();
+					return null;
 				}
-			});
+				//
+				// @Override
+				// public void done() {
+				// }
+			};
+			worker.execute();
+
 		} else if (a.equals(OptionBar.ACTION_REVERT))
 			System.out.println("Not yet implemented");
 		else if (a.equals(OptionBar.ACTION_SNAP))
@@ -390,17 +403,6 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		else if (a.equals(OptionBar.ACTION_STATUS))
 			System.out.println("Not yet implemented");
 
-		// if ("create".equals(e.getActionCommand()))
-		//
-		// else if ("snapshot".equals(e.getActionCommand()))
-		//
-		// else if ("add".equals(e.getActionCommand()))
-		//
-		// else if ("commit".equals(e.getActionCommand()))
-		// gitops.commitChanges(getMessage("Enter commit message"));
-		// else if ("push".equals(e.getActionCommand())) {
-		// getUnameandPass();
-		// gitops.pushToRemote(uName, pass, remote);
 	}
 
 	public String getMessage(String dialogText) {

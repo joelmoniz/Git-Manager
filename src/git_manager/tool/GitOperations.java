@@ -14,6 +14,7 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
+import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.TransportException;
@@ -100,13 +101,30 @@ public class GitOperations {
 
 	public void addAndCommit(String comment) {
 
-		try {
-			git.add().addFilepattern(".").call();
-			git.commit().setMessage(comment).call();
-			System.out.println("Snapshot complete");
-		} catch (GitAPIException e) {
-			e.printStackTrace();
+		if (comment == null) {
+			System.out.println("Commit Cancelled");
+			return;
 		}
+		if (comment.equals("")) {
+			int result = JOptionPane.showConfirmDialog(null,
+					"You have not entered a commit message. Proceed anyway?",
+					"No commit message warning", JOptionPane.OK_CANCEL_OPTION);
+
+			if (result != JOptionPane.OK_OPTION) {
+				System.out.println("Commit Cancelled");
+				return;
+			}
+		}
+
+			try {
+				git.add().addFilepattern(".").call();
+				git.commit().setMessage(comment).call();
+				System.out.println("Snapshot complete");
+			} catch (NoFilepatternException e) {
+				e.printStackTrace();
+			} catch (GitAPIException e) {
+				e.printStackTrace();
+			}
 	}
 
 	public void addFiles() {
@@ -120,6 +138,21 @@ public class GitOperations {
 	}
 
 	public void commitChanges(String comment) {
+
+		if (comment == null) {
+			System.out.println("Commit Cancelled");
+			return;
+		}
+		if (comment.equals("")) {
+			int result = JOptionPane.showConfirmDialog(null,
+					"You have not entered a commit message. Proceed anyway?",
+					"No commit message warning", JOptionPane.OK_CANCEL_OPTION);
+
+			if (result != JOptionPane.OK_OPTION) {
+				System.out.println("Commit Cancelled");
+				return;
+			}
+		}
 		try {
 			git.commit().setMessage(comment).call();
 			System.out.println("Commit complete");
