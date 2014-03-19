@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToolBar;
@@ -24,8 +25,10 @@ import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
 
 import processing.app.Base;
+import processing.app.Editor;
 
-public class GitOptionToolbar extends JToolBar implements MouseInputListener {
+public class GitOptionToolbar extends JToolBar implements MouseInputListener,
+		ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private final int space1 = 5;
@@ -37,8 +40,10 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 	// Repo Selection Menu variables
 	private int rsmX2, rsmX1, rsmY1, rsmY2;
 	private JLabel buttonDescription;
+	private GitOperations gitops;
+	private Editor editor;
 
-	public GitOptionToolbar() {
+	public GitOptionToolbar(Editor e) {
 		this.setName("ActionBar");
 		this.setBounds(0, 0, 400, 145);
 		this.setVisible(true);
@@ -53,6 +58,10 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 			buttonDescription.setForeground(Color.WHITE);
 		// points = new ArrayList<PointCoordinates>();
 		buttons = new ArrayList<JButton>();
+
+		editor = e;
+
+		gitops = new GitOperations(editor);
 
 		populateToolBar();
 		addMouseListener(this);
@@ -112,6 +121,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 		b.setBorder(emptyBorder);
 		b.setName(buttonName);
 		b.setActionCommand(actionCommand);
+		b.addActionListener(this);
 		b.addMouseListener(this);
 		b.addMouseMotionListener(this);
 
@@ -247,6 +257,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 			popup.setVisible(true);
 			popup.show(e.getComponent(), x, y);
 			popup.requestFocus();
+			return;
 		}
 
 		if (x > rsmX1 && x < rsmX2 && y > rsmY1 && y < rsmY2) {
@@ -295,6 +306,8 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 			// TODO: 120 has been hard-coded to push the menu to the left.
 			// Replace with sum of all image widths
 			popup.requestFocus();
+
+			return;
 		}
 	}
 
@@ -351,29 +364,47 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener {
 
 	}
 
-	// public class PointCoordinates {
-	// Point tl; // top-left
-	// Point br; // bottom-right
-	//
-	// public PointCoordinates(Point tl, int width, int height) {
-	//
-	// this.tl = new Point(tl);
-	// this.br = new Point(tl.x + width, tl.y + height);
-	// }
-	//
-	// public boolean isWithin(int x, int y) {
-	// if (x > tl.x && x < br.x && y > tl.y && y < br.y)
-	// return true;
-	// else
-	// return false;
-	// }
-	//
-	// @Override
-	// public String toString() {
-	// return "tl=(" + tl.x + "," + tl.y + "), br=(" + br.x + "," + br.y
-	// + ")";
-	// }
-	//
-	// }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String a = e.getActionCommand();
+		if (a.equals(OptionBar.ACTION_INIT))
+			gitops.initRepo();
+		else if (a.equals(OptionBar.ACTION_ADD))
+			gitops.addFiles();
+		else if (a.equals(OptionBar.ACTION_DIFF))
+			System.out.println("Not yet implemented");
+		else if (a.equals(OptionBar.ACTION_PUSH)) {
+			System.out.println("Pushing...");
+			javax.swing.SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					gitops.getUnameandPass();
+					gitops.pushToRemote();
+				}
+			});
+		} else if (a.equals(OptionBar.ACTION_REVERT))
+			System.out.println("Not yet implemented");
+		else if (a.equals(OptionBar.ACTION_SNAP))
+			gitops.addAndCommit(getMessage("Enter commit message"));
+		else if (a.equals(OptionBar.ACTION_RM))
+			System.out.println("Not yet implemented");
+		else if (a.equals(OptionBar.ACTION_STATUS))
+			System.out.println("Not yet implemented");
+
+		// if ("create".equals(e.getActionCommand()))
+		//
+		// else if ("snapshot".equals(e.getActionCommand()))
+		//
+		// else if ("add".equals(e.getActionCommand()))
+		//
+		// else if ("commit".equals(e.getActionCommand()))
+		// gitops.commitChanges(getMessage("Enter commit message"));
+		// else if ("push".equals(e.getActionCommand())) {
+		// getUnameandPass();
+		// gitops.pushToRemote(uName, pass, remote);
+	}
+
+	public String getMessage(String dialogText) {
+		return JOptionPane.showInputDialog(this, dialogText, null);
+	}
 
 }

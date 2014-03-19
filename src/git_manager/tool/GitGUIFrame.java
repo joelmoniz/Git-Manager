@@ -5,7 +5,6 @@ import git_manager.constants.ProjectDetails;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,11 +13,8 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 import processing.app.Base;
 import processing.app.Editor;
@@ -28,27 +24,26 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 
 	Editor editor;
 	GitOperations gitops;
-	String uName, pass, remote;
 	JPanel panel;
 	GitMenuBar menu;
 	GitOptionToolbar tool;
-//	static Point frameLocation;
+	// static Point frameLocation;
 
 	private static final long serialVersionUID = 1L;
 
 	public GitGUIFrame(Editor e) {
 
+		editor = e;
+		
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		// setMinimumSize(new Dimension(600, 500));
-		if (Base.isLinux())
-		{
+		if (Base.isLinux()) {
 			setMinimumSize(new Dimension(700, 530));
 			setPreferredSize(new Dimension(700, 530));
-		}
-		else {
-		setMinimumSize(new Dimension(650, 530));
-		setPreferredSize(new Dimension(650, 530));
+		} else {
+			setMinimumSize(new Dimension(650, 530));
+			setPreferredSize(new Dimension(650, 530));
 		}
 		setResizable(true);
 		setTitle(ProjectDetails.NAME);
@@ -57,7 +52,7 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		menu = new GitMenuBar();
 		setJMenuBar(menu);
 
-		tool = new GitOptionToolbar();
+		tool = new GitOptionToolbar(editor);
 
 		panel = new JPanel(new GridBagLayout());
 		add(panel);
@@ -132,7 +127,6 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		bLogin.setActionCommand("push");
 
 		Toolkit.setIcon(this);
-		editor = e;
 		gitops = new GitOperations(editor);
 
 		this.addWindowListener(new WindowAdapter() {
@@ -143,61 +137,32 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 			}
 		});
 		this.pack();
-		
-//		frameLocation = getLocationOnScreen();
-//
-//		this.addComponentListener(new ComponentListener() {
-//
-//			@Override
-//			public void componentShown(ComponentEvent arg0) {
-//				frameLocation = getLocationOnScreen();
-//			}
-//
-//			@Override
-//			public void componentResized(ComponentEvent arg0) {
-//				frameLocation = getLocationOnScreen();
-//			}
-//
-//			@Override
-//			public void componentMoved(ComponentEvent arg0) {
-//				frameLocation = getLocationOnScreen();
-//			}
-//
-//			@Override
-//			public void componentHidden(ComponentEvent arg0) {
-//
-//			}
-//		});
 
-	}
+		// frameLocation = getLocationOnScreen();
+		//
+		// this.addComponentListener(new ComponentListener() {
+		//
+		// @Override
+		// public void componentShown(ComponentEvent arg0) {
+		// frameLocation = getLocationOnScreen();
+		// }
+		//
+		// @Override
+		// public void componentResized(ComponentEvent arg0) {
+		// frameLocation = getLocationOnScreen();
+		// }
+		//
+		// @Override
+		// public void componentMoved(ComponentEvent arg0) {
+		// frameLocation = getLocationOnScreen();
+		// }
+		//
+		// @Override
+		// public void componentHidden(ComponentEvent arg0) {
+		//
+		// }
+		// });
 
-	void getUnameandPass() {
-		JTextField uName = new JTextField(15);
-		JPasswordField pass = new JPasswordField(15);
-		JTextField remote = new JTextField(15);
-
-		JPanel panel = new JPanel(new GridLayout(0, 1));
-		JPanel un = new JPanel();
-		JPanel un2 = new JPanel();
-		JPanel un3 = new JPanel();
-		un.add(new JLabel("Username:   "));
-		un.add(uName);
-		panel.add(un);
-		un2.add(new JLabel("Password:   "));
-		un2.add(pass);
-		panel.add(un2);
-		un3.add(new JLabel("GitHub repo:"));
-		un3.add(remote);
-		panel.add(un3);
-
-		int result = JOptionPane.showConfirmDialog(null, panel,
-				"Login to GitHub", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE);
-		if (result == JOptionPane.OK_OPTION) {
-			this.uName = uName.getText();
-			this.pass = new String(pass.getPassword());
-			this.remote = remote.getText();
-		}
 	}
 
 	public String getMessage(String dialogText) {
@@ -214,8 +179,8 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		else if ("commit".equals(e.getActionCommand()))
 			gitops.commitChanges(getMessage("Enter commit message"));
 		else if ("push".equals(e.getActionCommand())) {
-			getUnameandPass();
-			gitops.pushToRemote(uName, pass, remote);
+			gitops.getUnameandPass();
+			gitops.pushToRemote();
 		}
 	}
 

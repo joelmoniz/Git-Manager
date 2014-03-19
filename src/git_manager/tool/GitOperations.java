@@ -1,7 +1,14 @@
 package git_manager.tool;
 
+import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
@@ -27,6 +34,7 @@ public class GitOperations {
 	File gitDir;
 	File thisDir;
 	Git git;
+	String uName, pass, remote;
 
 	public GitOperations(Editor editor) {
 		this.editor = editor;
@@ -130,12 +138,25 @@ public class GitOperations {
 		}
 	}
 
-	public void pushToRemote(String uname, String pass, String remote) {
+	public void pushToRemote() {
 
+		if (uName == null) {
+			System.out.println("Please enter a valid username");
+			return;
+		}
+		if (pass == null) {
+			System.out.println("Please enter a valid password");
+			return;
+		}
+		if (remote == null) {
+			System.out
+					.println("Please enter a valid online repository address");
+			return;
+		}
 		// Get TransportException when project is >1Mb
-		// Fix this:
+		// TODO: Fix this:
 		// https://groups.google.com/forum/#!topic/bitbucket-users/OUsa8sb_Ti4
-		CredentialsProvider cp = new UsernamePasswordCredentialsProvider(uname,
+		CredentialsProvider cp = new UsernamePasswordCredentialsProvider(uName,
 				pass);
 
 		Iterable<PushResult> pc;
@@ -149,10 +170,45 @@ public class GitOperations {
 		} catch (InvalidRemoteException e) {
 			e.printStackTrace();
 		} catch (TransportException e) {
+			// System.out
+			// .println("Please use a project of size <1MB when pushing (will be resolved soon)...");
 			e.printStackTrace();
 		} catch (GitAPIException e) {
 			e.printStackTrace();
+		} finally {
+			uName = null;
+			remote = null;
+			pass = null;
 		}
 
+	}
+
+	void getUnameandPass() {
+		JTextField uName = new JTextField(15);
+		JPasswordField pass = new JPasswordField(15);
+		JTextField remote = new JTextField(15);
+
+		JPanel panel = new JPanel(new GridLayout(0, 1));
+		JPanel un = new JPanel();
+		JPanel un2 = new JPanel();
+		JPanel un3 = new JPanel();
+		un.add(new JLabel("Username:   "));
+		un.add(uName);
+		panel.add(un);
+		un2.add(new JLabel("Password:   "));
+		un2.add(pass);
+		panel.add(un2);
+		un3.add(new JLabel("GitHub repo:"));
+		un3.add(remote);
+		panel.add(un3);
+
+		int result = JOptionPane.showConfirmDialog(null, panel,
+				"Login to GitHub", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if (result == JOptionPane.OK_OPTION) {
+			this.uName = uName.getText();
+			this.pass = new String(pass.getPassword());
+			this.remote = remote.getText();
+		}
 	}
 }
