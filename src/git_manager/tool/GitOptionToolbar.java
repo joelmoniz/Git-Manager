@@ -270,7 +270,18 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 			// doesn't need a listener, since it doesn't do anything
 			item.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-
+					SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+						@Override
+						public Void doInBackground() {
+							new GitGHOperations();
+							return null;
+						}
+						//
+						// @Override
+						// public void done() {
+						// }
+					};
+					worker.execute();
 				}
 			});
 			popup.add(item, BorderLayout.LINE_START);
