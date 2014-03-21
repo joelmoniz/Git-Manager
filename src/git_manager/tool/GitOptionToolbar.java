@@ -319,6 +319,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 					// }
 				};
 				worker.execute();
+				new GitBBOperations();
 			}
 		});
 		popup.add(item2, BorderLayout.CENTER);
