@@ -116,15 +116,15 @@ public class GitOperations {
 			}
 		}
 
-			try {
-				git.add().addFilepattern(".").call();
-				git.commit().setMessage(comment).call();
-				System.out.println("Snapshot complete");
-			} catch (NoFilepatternException e) {
-				e.printStackTrace();
-			} catch (GitAPIException e) {
-				e.printStackTrace();
-			}
+		try {
+			git.add().addFilepattern(".").call();
+			git.commit().setMessage(comment).call();
+			System.out.println("Snapshot complete");
+		} catch (NoFilepatternException e) {
+			e.printStackTrace();
+		} catch (GitAPIException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void addFiles() {
@@ -173,19 +173,24 @@ public class GitOperations {
 
 	public void pushToRemote() {
 
-		if (uName == null) {
-			System.out.println("Please enter a valid username");
+		if (uName == null || pass == null || remote == null) {
+			System.out.println("Push cancelled");
 			return;
 		}
-		if (pass == null) {
-			System.out.println("Please enter a valid password");
+		if (uName.equals("") || pass.equals("") || remote.equals("")) {
+			if (uName.equals(""))
+				System.out.println("Please enter a valid username");
+
+			if (pass.equals(""))
+				System.out.println("Please enter a valid password");
+
+			if (remote.equals(""))
+				System.out
+						.println("Please enter a valid online repository address");
+			uName = pass = remote = null;
 			return;
 		}
-		if (remote == null) {
-			System.out
-					.println("Please enter a valid online repository address");
-			return;
-		}
+
 		// Get TransportException when project is >1Mb
 		// TODO: Fix this:
 		// https://groups.google.com/forum/#!topic/bitbucket-users/OUsa8sb_Ti4

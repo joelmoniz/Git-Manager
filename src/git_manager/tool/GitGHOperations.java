@@ -20,11 +20,15 @@ public class GitGHOperations {
 	private String pass;
 	private String remoteOwner;
 	private String remoteName;
+	private boolean isAuthValid;
 
 	public GitGHOperations() {
+		isAuthValid = false;
 		getAuthenticationDetails();
-		basicAuthentication();
-		forkRepo();
+		if (isAuthValid) {
+			basicAuthentication();
+			forkRepo();
+		}
 	}
 
 	public void getAuthenticationDetails() {
@@ -35,7 +39,7 @@ public class GitGHOperations {
 		JTextField remoteName = new JTextField(15);
 
 		System.out
-				.println("Proof-of-concept: Only forking a repo has been implemented...");
+				.println("Proof-of-concept: Only forking a GitHub repo has been implemented...");
 
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 		JPanel un = new JPanel();
@@ -63,7 +67,28 @@ public class GitGHOperations {
 			this.pass = new String(pass.getPassword());
 			this.remoteOwner = remoteOwner.getText();
 			this.remoteName = remoteName.getText();
-		}
+			if (this.uName.equals("") || this.pass.equals("")
+					|| this.remoteOwner.equals("")
+					|| this.remoteName.equals("")) {
+				if (this.uName.equals(""))
+					System.out.println("Please enter a valid username");
+
+				if (this.pass.equals(""))
+					System.out.println("Please enter a valid password");
+
+				if (this.remoteName.equals(""))
+					System.out
+							.println("Please enter a valid online repository name");
+
+				if (this.remoteOwner.equals(""))
+					System.out
+							.println("Please enter a valid repository owner name");
+				this.uName = this.pass = this.remoteOwner = this.remoteName = null;
+				return;
+			}
+			isAuthValid = true;
+		} else
+			System.out.println("Fork cancelled.");
 	}
 
 	// following functions implemented from readme in the page located here:
@@ -75,7 +100,6 @@ public class GitGHOperations {
 	}
 
 	public void forkRepo() {
-		System.out.println(remoteName + " forked.");
 		RepositoryService service = new RepositoryService();
 		service.getClient().setCredentials(uName, pass);
 		RepositoryId toBeForked = new RepositoryId(remoteOwner, remoteName);
@@ -84,5 +108,7 @@ public class GitGHOperations {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println(remoteName + " forked.");
+		// TODO: Make uName, pass, remoteName, remoteOwner null if needed
 	}
 }

@@ -241,86 +241,108 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		System.out.println("clicked x,y: " + x + " " + y);
 
 		if (x > elmX1 && x < elmX2 && y > elmY1 && y < elmY2) {
-			JPopupMenu popup = new JPopupMenu("Expertise Level");
-
-			JRadioButtonMenuItem item = new JRadioButtonMenuItem("Novice");
-			// doesn't need a listener, since it doesn't do anything
-			item.setSelected(true);
-			popup.add(item);
-
-			JMenuItem item2 = new JMenuItem("Pro");
-			item2.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-
-				}
-			});
-			popup.add(item2);
-			popup.setVisible(true);
-			popup.show(e.getComponent(), x, y);
-			popup.requestFocus();
+			expertiseLevelMenuRender(e);
 			return;
 		}
 
 		if (x > rsmX1 && x < rsmX2 && y > rsmY1 && y < rsmY2) {
-			JPopupMenu popup = new JPopupMenu("Online Repo Selection");
-			popup.setLayout(new BorderLayout());
-
-			JMenuItem item = new JMenuItem(new ImageIcon(this.getClass()
-					.getResource(OptionBar.REPO_GITHUB)));
-			// doesn't need a listener, since it doesn't do anything
-			item.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-						@Override
-						public Void doInBackground() {
-							new GitGHOperations();
-							return null;
-						}
-						//
-						// @Override
-						// public void done() {
-						// }
-					};
-					worker.execute();
-				}
-			});
-			popup.add(item, BorderLayout.LINE_START);
-
-			// popup.add(Box.createHorizontalStrut(5));
-			// popup.add(new JSeparator(SwingConstants.VERTICAL));
-			// popup.add(Box.createHorizontalStrut(5));
-
-			JMenuItem item2 = new JMenuItem(new ImageIcon(this.getClass()
-					.getResource(OptionBar.REPO_GOOGLE_PROJ_HOST)));
-			item2.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-
-				}
-			});
-			popup.add(item2, BorderLayout.CENTER);
-
-			// popup.add(Box.createHorizontalStrut(5));
-			// popup.add(new JSeparator(SwingConstants.VERTICAL));
-			// popup.add(Box.createHorizontalStrut(5));
-
-			JMenuItem item3 = new JMenuItem(new ImageIcon(this.getClass()
-					.getResource(OptionBar.REPO_BITBUCKET)));
-			item3.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-
-				}
-			});
-			popup.add(item3, BorderLayout.LINE_END);
-
-			popup.pack();
-			popup.setVisible(true);
-			popup.show(e.getComponent(), x - 120, y);
-			// TODO: 120 has been hard-coded to push the menu to the left.
-			// Replace with sum of all image widths
-			popup.requestFocus();
-
+			onlineRepoMenuRender(e);
 			return;
 		}
+	}
+
+	private void expertiseLevelMenuRender(MouseEvent e) {
+		JPopupMenu popup = new JPopupMenu("Expertise Level");
+
+		JRadioButtonMenuItem item = new JRadioButtonMenuItem("Novice");
+		// doesn't need a listener, since it doesn't do anything
+		item.setSelected(true);
+		popup.add(item);
+
+		JMenuItem item2 = new JMenuItem("Pro");
+		item2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		popup.add(item2);
+		popup.setVisible(true);
+		popup.show(e.getComponent(), e.getX(), e.getY());
+		popup.requestFocus();
+
+	}
+
+	private void onlineRepoMenuRender(MouseEvent e) {
+		
+		// TODO: Add separators between the items
+		JPopupMenu popup = new JPopupMenu("Online Repo Selection");
+		popup.setLayout(new BorderLayout());
+
+		JMenuItem item = new JMenuItem(new ImageIcon(this.getClass()
+				.getResource(OptionBar.REPO_GITHUB)));
+		
+		item.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+					@Override
+					public Void doInBackground() {
+						new GitGHOperations();
+						return null;
+					}
+					//
+					// @Override
+					// public void done() {
+					// }
+				};
+				worker.execute();
+			}
+		});
+		popup.add(item, BorderLayout.LINE_START);
+
+		// popup.add(Box.createHorizontalStrut(5));
+		// popup.add(new JSeparator(SwingConstants.VERTICAL));
+		// popup.add(Box.createHorizontalStrut(5));
+
+		JMenuItem item2 = new JMenuItem(new ImageIcon(this.getClass()
+				.getResource(OptionBar.REPO_BITBUCKET)));
+		item2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+					@Override
+					public Void doInBackground() {
+						new GitBBOperations();
+						return null;
+					}
+					//
+					// @Override
+					// public void done() {
+					// }
+				};
+				worker.execute();
+			}
+		});
+		popup.add(item2, BorderLayout.CENTER);
+
+		// popup.add(Box.createHorizontalStrut(5));
+		// popup.add(new JSeparator(SwingConstants.VERTICAL));
+		// popup.add(Box.createHorizontalStrut(5));
+
+		JMenuItem item3 = new JMenuItem(new ImageIcon(this.getClass()
+				.getResource(OptionBar.REPO_GOOGLE_PROJ_HOST)));
+		item3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		popup.add(item3, BorderLayout.LINE_END);
+
+		popup.pack();
+		popup.setVisible(true);
+		popup.show(e.getComponent(), e.getX() - 120, e.getY());
+		// TODO: 120 has been hard-coded to push the menu to the left.
+		// Replace with sum of all image widths
+		popup.requestFocus();
+
 	}
 
 	@Override
