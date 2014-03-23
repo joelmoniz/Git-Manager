@@ -30,7 +30,7 @@ public class GitBBOperations {
 	// deleted, though the JSON data takes no time at all to update in either
 	// case. Find
 	// out whats wrong when adding an issue on bitbucket.
-	
+
 	public void viewIssueNumber() {
 		JTextField accName = new JTextField(15);
 		JTextField repoSlug = new JTextField(15);
@@ -110,4 +110,5 @@ public class GitBBOperations {
 			e1.printStackTrace();
 		}
 	}
+
 }

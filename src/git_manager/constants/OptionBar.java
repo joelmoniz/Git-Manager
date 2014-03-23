@@ -46,6 +46,8 @@ public static final String GIT_SNAP_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 			+ "bitbucket_logo.png";
 	public static final String REPO_GITHUB = ONLINE_REPO_ICON_PATH
 			+ "GitHub-Mark-120px-plus.png";
+	public static final String REPO_SOURCEFORGE = ONLINE_REPO_ICON_PATH
+			+ "sourceforge.png";
 	public static final String REPO_GOOGLE_PROJ_HOST = ONLINE_REPO_ICON_PATH
 			+ "gph.png";
 

@@ -2,7 +2,6 @@ package git_manager.tool;
 
 import git_manager.constants.OptionBar;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -276,7 +276,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		
 		// TODO: Add separators between the items
 		JPopupMenu popup = new JPopupMenu("Online Repo Selection");
-		popup.setLayout(new BorderLayout());
+		popup.setLayout(new BoxLayout(popup,BoxLayout.X_AXIS));
 
 		JMenuItem item = new JMenuItem(new ImageIcon(this.getClass()
 				.getResource(OptionBar.REPO_GITHUB)));
@@ -297,7 +297,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 				worker.execute();
 			}
 		});
-		popup.add(item, BorderLayout.LINE_START);
+		popup.add(item);
 
 		// popup.add(Box.createHorizontalStrut(5));
 		// popup.add(new JSeparator(SwingConstants.VERTICAL));
@@ -322,20 +322,36 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 				new GitBBOperations();
 			}
 		});
-		popup.add(item2, BorderLayout.CENTER);
+		popup.add(item2);
 
 		// popup.add(Box.createHorizontalStrut(5));
 		// popup.add(new JSeparator(SwingConstants.VERTICAL));
 		// popup.add(Box.createHorizontalStrut(5));
 
 		JMenuItem item3 = new JMenuItem(new ImageIcon(this.getClass()
-				.getResource(OptionBar.REPO_GOOGLE_PROJ_HOST)));
+				.getResource(OptionBar.REPO_SOURCEFORGE)));
 		item3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 			}
 		});
-		popup.add(item3, BorderLayout.LINE_END);
+		popup.add(item3);
+
+		popup.pack();
+		popup.setVisible(true);
+		popup.show(e.getComponent(), e.getX() - 120, e.getY());
+		// TODO: 120 has been hard-coded to push the menu to the left.
+		// Replace with sum of all image widths
+		popup.requestFocus();
+		
+		JMenuItem item4 = new JMenuItem(new ImageIcon(this.getClass()
+				.getResource(OptionBar.REPO_GOOGLE_PROJ_HOST)));
+		item4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		popup.add(item4);
 
 		popup.pack();
 		popup.setVisible(true);
