@@ -9,7 +9,26 @@
 >
 * Create a folder named "tools" inside your Sketchbook folder (if not already present). The location of the sketchbook folder is shown in Processing's Preferences dialog.
 * Extract GitManager.zip present in "distribution/GitManager-1/download" into the "tools" folder. Ensure that in the tools folder, GitManager folder has src, tools, etc. within it, and not another sub-folder named GitManager.  
-* Restart Processing
+* Restart Processing  
+
+>##Instructions to Build Git Manager
+>To compile Git Manager, do the following:
+>
+1. Clone Git Manager into a location of your choice:  
+
+>>Change the directory to where you would like to clone Git Manager to, and the run the following command in the Git Bash Terminal:  
+  
+>>>git clone https://github.com/joelmoniz/Git-Manager.git  
+  
+>>Note: If you would like to contribute to the Git Manager, you'll have to fork it instead
+
+><ol start='2'><li> Import the cloned project into Eclipse</li>   &nbsp;
+><li>Open the build.properties file in the resources folder, and change the property "sketchbook.location" to wherever your Processing sketchbook is located, as instructed in the file.</li>
+&nbsp;
+><li>Now, to show the Ant View, go to Window > Show View > Ant</li> &nbsp;
+><li>Drag the resources/build.xml file onto the Ant view there.</li>&nbsp;
+><li>Press the 'Play' button, and voilà!</li>
+</ol>  
   
 >##Sources  
   
