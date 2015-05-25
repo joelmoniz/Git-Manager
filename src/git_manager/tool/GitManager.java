@@ -58,8 +58,13 @@ public class GitManager implements Tool {
 											+ ProjectDetails.NAME
 											+ " v"
 											+ ProjectDetails.VERSION
-											+ "    	      	   |\n"
-											+ "*-----*-----*-----*-----*-----*-----*-----*-----*-----*\n"
+											+ "    	             |\n"
+											+ "| 	   by "
+											+ ProjectDetails.AUTHOR
+											+ "	             |\n|           "
+											+ ProjectDetails.WEBSITE
+											+ "         |\n"
+											+ "*-----*-----*-----*-----*-----*-----*-----*-----*-----*"
 
 									);
 							frame = new GitGUIFrame(editor);
