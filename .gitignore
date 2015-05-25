@@ -1,2 +1,7 @@
 /bin
 Thumbs.db
+/nbproject/
+/build/
+/dist/
+/build.number
+/distribution
