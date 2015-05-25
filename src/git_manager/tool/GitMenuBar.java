@@ -27,7 +27,7 @@ public class GitMenuBar extends JMenuBar {
 		populateHelpMenu();
 
 		this.add(git);
-		this.add(onlineRepos);
+		//this.add(onlineRepos); TODO: Uncomment  for online
 		this.add(settings);
 		this.add(help);
 	}

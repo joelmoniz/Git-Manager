@@ -148,7 +148,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		this.setOpaque(true);
 		this.setBackground(Color.BLACK);
 		initializeDimensions(g);
-		renderRepoSelectionMenu(g);
+		//renderRepoSelectionMenu(g); TODO: Uncomment for online
 		renderExpertiseLevelMenu(g);
 
 	}
@@ -246,7 +246,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		}
 
 		if (x > rsmX1 && x < rsmX2 && y > rsmY1 && y < rsmY2) {
-			onlineRepoMenuRender(e);
+			//onlineRepoMenuRender(e); TODO: Uncomment for online
 			return;
 		}
 	}
