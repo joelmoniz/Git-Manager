@@ -28,6 +28,8 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 	GitMenuBar menu;
 	GitOptionToolbar tool;
 	// static Point frameLocation;
+	
+	int mode = 0;
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,27 +40,19 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
 		// setMinimumSize(new Dimension(600, 500));
-		if (Base.isLinux()) {
-			setMinimumSize(new Dimension(700, 530));
-			setPreferredSize(new Dimension(700, 530));
-		} else {
-			setMinimumSize(new Dimension(650, 530));
-			setPreferredSize(new Dimension(650, 530));
-		}
-		setResizable(true);
 		setTitle(ProjectDetails.NAME);
 		setVisible(true);
 
 		menu = new GitMenuBar();
-		setJMenuBar(menu);
+		//setJMenuBar(menu); TODO: Uncomment this to display menubar
 
 		tool = new GitOptionToolbar(editor);
 
-		panel = new JPanel(new GridBagLayout());
+	  panel = new JPanel(new GridBagLayout());
+		  
 		add(panel);
 
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
 
 		c.ipady = 20;
 		c.anchor = GridBagConstraints.PAGE_START;
@@ -67,10 +61,19 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		c.gridwidth = 5;
 		c.weighty = 1.0;
 		c.weightx = 1;
-		c.insets = new Insets(0, 0, 5, 0);
+		
+		if (mode == 2) {
+		  c.insets = new Insets(0, 0, 5, 0);
+	    c.fill = GridBagConstraints.HORIZONTAL;
+		}
+		else {
+		  c.insets = new Insets(0, 0, 0, 0);
+	    c.fill = GridBagConstraints.BOTH;
+		}
 
-		panel.add(tool, c);
-		this.setVisible(true);
+    panel.add(tool, c);
+
+    this.setVisible(true);
 
 		c.anchor = GridBagConstraints.CENTER;
 		c.fill = GridBagConstraints.NONE;
@@ -83,7 +86,9 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 
 		JButton bCreate = new JButton("Click to create repo");
 		bCreate.addActionListener(this);
-		panel.add(bCreate, c);
+		if (mode == 2) {
+		  panel.add(bCreate, c);
+		}
 		bCreate.setActionCommand("create");
 
 		c.gridx = 1;
@@ -93,7 +98,9 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 
 		JButton bSnap = new JButton("Click to \"Take Snapshot\"");
 		bSnap.addActionListener(this);
-		panel.add(bSnap, c);
+    if (mode == 2) {
+      panel.add(bSnap, c);
+    }
 		bSnap.setActionCommand("snapshot");
 
 		c.gridx = 1;
@@ -103,7 +110,9 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 
 		JButton bAdd = new JButton("Add all files");
 		bAdd.addActionListener(this);
-		panel.add(bAdd, c);
+    if (mode == 2) {
+      panel.add(bAdd, c);
+    }
 		bAdd.setActionCommand("add");
 
 		c.gridx = 1;
@@ -113,7 +122,9 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 
 		JButton bCommit = new JButton("Commit");
 		bCommit.addActionListener(this);
-		panel.add(bCommit, c);
+		if (mode == 2) {
+		  panel.add(bCommit, c);
+		}
 		bCommit.setActionCommand("commit");
 
 		c.gridx = 1;
@@ -123,7 +134,9 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 
 		JButton bLogin = new JButton("Push to GitHub");
 		bLogin.addActionListener(this);
-		panel.add(bLogin, c);
+    if (mode == 2) {
+      panel.add(bLogin, c);
+    }
 		bLogin.setActionCommand("push");
 
 		Toolkit.setIcon(this);
@@ -136,6 +149,22 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 				GitManager.frame = null;
 			}
 		});
+		if (mode == 2) {
+      if (Base.isLinux()) {
+        setMinimumSize(new Dimension(700, 530));
+        setPreferredSize(new Dimension(700, 530));
+      } else {
+        setMinimumSize(new Dimension(650, 530));
+        setPreferredSize(new Dimension(650, 530));
+      }
+      setResizable(true);
+		}
+		else {
+		  this.pack();
+		  setPreferredSize(new Dimension(this.getWidth() + 135, this.getHeight()));
+		  setResizable(false); //TODO: Make true for expertise
+		}
+		
 		this.pack();
 
 		// frameLocation = getLocationOnScreen();

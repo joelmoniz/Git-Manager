@@ -149,7 +149,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		this.setBackground(Color.BLACK);
 		initializeDimensions(g);
 		//renderRepoSelectionMenu(g); TODO: Uncomment for online
-		renderExpertiseLevelMenu(g);
+		//renderExpertiseLevelMenu(g); TODO: Uncomment for expertise
 
 	}
 
@@ -238,7 +238,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		int x = e.getX();
 		int y = e.getY();
 
-		System.out.println("clicked x,y: " + x + " " + y);
+//		System.out.println("clicked x,y: " + x + " " + y);
 
 		if (x > elmX1 && x < elmX2 && y > elmY1 && y < elmY2) {
 			expertiseLevelMenuRender(e);
