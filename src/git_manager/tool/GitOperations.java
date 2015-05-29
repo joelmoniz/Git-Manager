@@ -13,6 +13,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.MergeResult;
+import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
@@ -25,6 +27,7 @@ import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
+import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
@@ -263,4 +266,24 @@ public class GitOperations {
 			this.remote = remote.getText();
 		}
 	}
+	
+	 public void pullFromRemote() {
+	    PullResult result;
+	    try {
+	      result = git.pull().call();
+	      FetchResult fetchResult = result.getFetchResult();
+	      MergeResult mergeResult = result.getMergeResult();
+	      // TODO: Handle merge conflicts :O
+	      System.out.println(mergeResult.getMergeStatus());
+//	      System.out.println("fetch status: " + fetchResult.getMessages());
+	    } catch (InvalidRemoteException e) {
+	      e.printStackTrace();
+	    } catch (TransportException e) {
+	      // System.out
+	      // .println("Please use a project of size <1MB when pushing (will be resolved soon)...");
+	      e.printStackTrace();
+	    } catch (GitAPIException e) {
+	      e.printStackTrace();
+	    }
+	  }
 }
