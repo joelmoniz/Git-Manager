@@ -3,6 +3,8 @@ package git_manager.tool;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +33,7 @@ import processing.app.Editor;
 
 public class GitOperations {
 
+  public static String GITIGNORE_LOCATION = "/data/code/sample_gitignore.txt";
 	Editor editor;
 	File gitDir;
 	File thisDir;
@@ -64,6 +67,7 @@ public class GitOperations {
 			System.out.println(gitDir.getAbsolutePath());
 			Git.init().setDirectory(thisDir).setBare(false).call();
 			System.out.println("New repo created.");
+			createGitIgnore();
 		} catch (InvalidRemoteException e) {
 			e.printStackTrace();
 		} catch (TransportException e) {
@@ -71,6 +75,17 @@ public class GitOperations {
 		} catch (GitAPIException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// TODO: Ensure that repo name == sketchname
+	public void createGitIgnore() {
+	  InputStream sourceGitignore = this.getClass().getResourceAsStream(GITIGNORE_LOCATION);
+	  File destGitignore = new File(thisDir.getAbsolutePath() + "\\.gitignore");
+	  try {
+      Files.copy(sourceGitignore, destGitignore.toPath());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 	}
 
 	public void initBareRepo() {
@@ -82,7 +97,6 @@ public class GitOperations {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public void cloneRepo(File cloneFrom, File cloneTo) {
