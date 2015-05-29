@@ -15,6 +15,8 @@ public class OptionBar {
 			+ "gitdiff.png";
 	public static final String GIT_PUSH_ICON = NOVICE_TOOL_ICON_PATH
 			+ "gitpush.png";
+  public static final String GIT_PULL_ICON = NOVICE_TOOL_ICON_PATH
+      + "gitpull.png";
 	public static final String GIT_REVERT_ICON = NOVICE_TOOL_ICON_PATH
 			+ "gitrevert.png";
 	public static final String GIT_RM_ICON = NOVICE_TOOL_ICON_PATH
@@ -33,6 +35,8 @@ public static final String GIT_DIFF_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	+ "gitdiff_selected.png";
 public static final String GIT_PUSH_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	+ "gitpush_selected.png";
+public static final String GIT_PULL_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitpull_selected.png";
 public static final String GIT_REVERT_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	+ "gitrevert_selected.png";
 public static final String GIT_RM_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
@@ -55,6 +59,7 @@ public static final String GIT_SNAP_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	public static final String ACTION_ADD = "GIT_ADD";
 	public static final String ACTION_DIFF = "GIT_DIFF";
 	public static final String ACTION_PUSH = "GIT_PUSH";
+  public static final String ACTION_PULL = "GIT_PULL";
 	public static final String ACTION_REVERT = "GIT_REVERT";
 	public static final String ACTION_RM = "GIT_RM";
 	public static final String ACTION_STATUS = "GIT_STATUS";
@@ -64,6 +69,7 @@ public static final String GIT_SNAP_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	public static final String DESCRIP_ADD = "Stage Files";
 	public static final String DESCRIP_DIFF = "Show Changes";
 	public static final String DESCRIP_PUSH = "Push to Online Repo";
+  public static final String DESCRIP_PULL = "Pull from Online Repo";
 	public static final String DESCRIP_REVERT = "Undo Commits";
 	public static final String DESCRIP_RM = "Remove Files";
 	public static final String DESCRIP_STATUS = "Show Working Tree Status";

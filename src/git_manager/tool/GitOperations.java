@@ -274,6 +274,9 @@ public class GitOperations {
 	      FetchResult fetchResult = result.getFetchResult();
 	      MergeResult mergeResult = result.getMergeResult();
 	      // TODO: Handle merge conflicts :O
+	      // TODO: Handle NoHeadException (repo not initialized)
+	      // TODO: Handle InvalidConfigurationException (no pushes made till now- 
+	      //       configure remote manually)
 	      System.out.println(mergeResult.getMergeStatus());
 //	      System.out.println("fetch status: " + fetchResult.getMessages());
 	    } catch (InvalidRemoteException e) {

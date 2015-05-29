@@ -82,6 +82,9 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_PUSH_ICON, OptionBar.ACTION_PUSH,
 				OptionBar.DESCRIP_PUSH, OptionBar.GIT_PUSH_SELECTED_ICON));
+    this.add(Box.createHorizontalStrut(space1));
+    this.add(addButton(OptionBar.GIT_PULL_ICON, OptionBar.ACTION_PULL,
+                       OptionBar.DESCRIP_PULL, OptionBar.GIT_PULL_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_REVERT_ICON, OptionBar.ACTION_REVERT,
 				OptionBar.DESCRIP_REVERT, OptionBar.GIT_REVERT_SELECTED_ICON));
@@ -443,15 +446,35 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 				// }
 			};
 			worker.execute();
-
-		} else if (a.equals(OptionBar.ACTION_REVERT))
-			System.out.println("Not yet implemented");
+		}
+		else if (a.equals(OptionBar.ACTION_REVERT))
+		  System.out.println("Not yet implemented");
 		else if (a.equals(OptionBar.ACTION_SNAP))
 			gitops.addAndCommit(getMessage("Enter commit message"));
 		else if (a.equals(OptionBar.ACTION_RM))
 			System.out.println("Not yet implemented");
 		else if (a.equals(OptionBar.ACTION_STATUS))
 			System.out.println("Not yet implemented");
+		else if (a.equals(OptionBar.ACTION_PULL))
+		 {
+       System.out.println("Pulling...");
+        // TODO: Design a button different from the current pull and the
+        // pull that displays on mouseover which remains until the pull
+        // action is complete, and then changes back to original pull
+        // button- almost identical to the similar todo for push
+        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+          @Override
+          public Void doInBackground() {
+            gitops.pullFromRemote();
+            return null;
+          }
+          //
+          // @Override
+          // public void done() {
+          // }
+        };
+        worker.execute();
+    }
 
 	}
 
