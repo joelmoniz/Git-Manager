@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Set;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import javax.swing.JTextField;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
@@ -24,6 +26,7 @@ import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
@@ -289,4 +292,53 @@ public class GitOperations {
 	      e.printStackTrace();
 	    }
 	  }
+	 
+	 public void displayStatus() {
+	   Status status;
+    try {
+      status = git.status().call();
+      if (status.isClean()) {
+        System.out.println("No changes made in sketch since last commit");
+      }
+      else {
+        Set<String> conflicts = status.getConflicting();
+        Set<String> untracked = status.getUntracked();
+        Set<String> added = status.getAdded();
+        Set<String> changed = status.getChanged();
+        Set<String> deleted = status.getRemoved();
+//        deleted.addAll(status.getMissing());
+        Set<String> missing = status.getMissing();
+        Set<String> modified = status.getModified();
+        
+        // TODO: Explanations not technically sound- intended for first time users not fully familiar with git
+        printFileStatus("Added", "Files not present in the last commit/snapshot, but will be added in the next commit", added);
+        printFileStatus("Changed", "Files present in the last commit/snapshot whose modifications will added in the next commit", changed);
+        printFileStatus("Deleted", "File whose deletion will be recorded in the next commit", deleted);
+        printFileStatus("Missing", "File whose deletion will be not recorded in the next commit", missing);
+        printFileStatus("Modified", "File present in the last snapshot/commit, subsequently modified, whose modifications will not yet be added in the next commit", modified);
+        printFileStatus("Untracked", "New files not yet present in any commits", untracked);
+        
+        if (!conflicts.isEmpty()) {
+          System.out.println("Warning: Conflicts detected in the following files");
+          printFileStatus("", "", conflicts);
+        }
+      }
+    } catch (NoWorkTreeException e) {
+      e.printStackTrace();
+    } catch (GitAPIException e) {
+      e.printStackTrace();
+    }
+	   
+	 }
+	 
+	 void printFileStatus(String type, String description, Set<String> files) {
+	   if (!files.isEmpty()) {
+	     if (type != null && !type.isEmpty()) {
+	       System.out.println("\n" + type + " Files (" + description + "):");
+	     }
+	     for (String f : files) {
+	       System.out.println("\t" + f);
+	     }
+	   }
+	 }
 }
