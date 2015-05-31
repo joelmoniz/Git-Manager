@@ -65,8 +65,8 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		gitops = new GitOperations(editor);
 
 		populateToolBar();
-		addMouseListener(this);
-		addMouseMotionListener(this);
+//		addMouseListener(this);
+//		addMouseMotionListener(this);
 	}
 
 	private void populateToolBar() {
@@ -362,7 +362,6 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		// TODO: 120 has been hard-coded to push the menu to the left.
 		// Replace with sum of all image widths
 		popup.requestFocus();
-
 	}
 
 	@Override
@@ -372,50 +371,29 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-
+    String prnt = e.getComponent().getName();
+    buttonDescription.setText(prnt);
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-
+	  buttonDescription.setText("");
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-
-		for (JButton b : buttons) {
-			// TODO: Find out how to correct this button-image offset. Button
-			// not exactly aligned with icon!
-			// Making the button as a border-layout doesn't work
-
-			// System.out.println("Mouse: x= " + e.getX() + " y: " + e.getY()
-			// + "  Bn: x= " + b.getX() + "-" + b.getX() + b.getWidth()
-			// + " y= " + b.getY() + "-" + b.getY() + b.getHeight());
-			if (b.getX() < (e.getX()) && b.getY() < (e.getY())
-					&& (b.getX() + b.getWidth()) > e.getX()
-					&& (b.getY() + b.getHeight()) > e.getY()) {
-				String prnt = e.getComponent().getName();
-				buttonDescription.setText(prnt);
-				return;
-			}
-		}
-		buttonDescription.setText("");
-
 	}
 
 	@Override
