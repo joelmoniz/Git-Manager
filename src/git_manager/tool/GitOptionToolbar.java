@@ -429,8 +429,9 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		  System.out.println("Not yet implemented");
 		else if (a.equals(OptionBar.ACTION_SNAP))
 			gitops.addAndCommit(getMessage("Enter commit message"));
-		else if (a.equals(OptionBar.ACTION_RM))
-			System.out.println("Not yet implemented");
+		else if (a.equals(OptionBar.ACTION_RM)) {
+		  gitops.resetHard();
+		}
 		else if (a.equals(OptionBar.ACTION_STATUS)) {
 		  gitops.displayStatus();
 		}

@@ -16,7 +16,10 @@ import javax.swing.JTextField;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.PullResult;
+import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.Status;
+import org.eclipse.jgit.api.ResetCommand.ResetType;
+import org.eclipse.jgit.api.errors.CheckoutConflictException;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRemoteException;
@@ -28,6 +31,7 @@ import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
@@ -340,5 +344,20 @@ public class GitOperations {
 	       System.out.println("\t" + f);
 	     }
 	   }
+	 }
+	 
+	 void resetHard() {
+	   ResetCommand reset = git.reset();
+	   reset.setRef(Constants.HEAD);
+//	   reset.addPath(".");
+	   reset.setMode(ResetType.HARD);
+	   try {
+      reset.call();
+      System.out.println("Hard reset completed. Sketch is now exactly like the last snapshot/commit.");
+    } catch (CheckoutConflictException e) {
+      e.printStackTrace();
+    } catch (GitAPIException e) {
+      e.printStackTrace();
+    }
 	 }
 }
