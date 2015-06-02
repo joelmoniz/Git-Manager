@@ -430,6 +430,8 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		else if (a.equals(OptionBar.ACTION_SNAP))
 			gitops.addAndCommit(getMessage("Enter commit message"));
 		else if (a.equals(OptionBar.ACTION_RM)) {
+		  ((JButton)e.getSource()).getModel().setRollover(false);
+		  buttonDescription.setText("");
 		  gitops.resetHard();
 		}
 		else if (a.equals(OptionBar.ACTION_STATUS)) {

@@ -71,7 +71,7 @@ public static final String GIT_SNAP_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	public static final String DESCRIP_PUSH = "Push to Online Repo";
   public static final String DESCRIP_PULL = "Pull from Online Repo";
 	public static final String DESCRIP_REVERT = "Undo Commits";
-	public static final String DESCRIP_RM = "Remove Files";
+	public static final String DESCRIP_RM = "Undo Changes in Repo";
 	public static final String DESCRIP_STATUS = "Show Working Tree Status";
 	public static final String DESCRIP_SNAP = "Save Working Tree State";
 	
