@@ -1,4 +1,4 @@
-<project name="ProcessingTools" default="clean" basedir="../">
+<project name="Git Manager" default="clean" basedir="../">
 
     
 <!--	
