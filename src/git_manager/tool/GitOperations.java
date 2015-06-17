@@ -1,10 +1,12 @@
 package git_manager.tool;
 
 import java.awt.GridLayout;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JLabel;
@@ -29,14 +31,22 @@ import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
+import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.errors.AmbiguousObjectException;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.NoWorkTreeException;
+import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 
 import processing.app.Base;
 import processing.app.Editor;
@@ -370,4 +380,54 @@ public class GitOperations {
       e.printStackTrace();
     }
 	 }
+	
+	// TODO: Finish off a proper diff function
+  void printDiffWithHead() {
+    Repository repository = git.getRepository();
+    ObjectId oldHead;
+    try {
+      oldHead = repository.resolve("HEAD~1^{tree}");
+      ObjectId head = repository.resolve("HEAD^{tree}");
+
+      System.out.println("Printing diff between tree: " + oldHead + " and "
+          + head);
+
+      // prepare the two iterators to compute the diff between
+      ObjectReader reader = repository.newObjectReader();
+      CanonicalTreeParser oldTreeIter = new CanonicalTreeParser();
+      oldTreeIter.reset(reader, oldHead);
+      CanonicalTreeParser newTreeIter = new CanonicalTreeParser();
+      newTreeIter.reset(reader, head);
+
+      // finally get the list of changed files
+      List<DiffEntry> diffs = git.diff().setNewTree(newTreeIter)
+          .setOldTree(oldTreeIter).call();
+      for (DiffEntry entry : diffs) {
+        System.out.println("Entry: " + entry);
+      }
+      System.out.println("----------------------");
+      
+      DiffFormatter df = new DiffFormatter( new ByteArrayOutputStream() );
+      df.setRepository( git.getRepository() );
+      List<DiffEntry> entries = df.scan( oldTreeIter, newTreeIter );
+
+      for( DiffEntry entry : entries ) {
+        System.out.println( entry );
+      }
+      
+      System.out.println("Done");
+
+      repository.close();
+    } catch (RevisionSyntaxException e) {
+      e.printStackTrace();
+    } catch (AmbiguousObjectException e) {
+      e.printStackTrace();
+    } catch (IncorrectObjectTypeException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (GitAPIException e) {
+      e.printStackTrace();
+    }
+  }
 }

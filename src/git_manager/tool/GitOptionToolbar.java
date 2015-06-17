@@ -77,9 +77,10 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		this.add(addButton(OptionBar.GIT_SNAP_ICON, OptionBar.ACTION_SNAP,
 				OptionBar.DESCRIP_SNAP, OptionBar.GIT_SNAP_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
-		this.add(addButton(OptionBar.GIT_DIFF_ICON, OptionBar.ACTION_DIFF,
-				OptionBar.DESCRIP_DIFF, OptionBar.GIT_DIFF_SELECTED_ICON));
-		this.add(Box.createHorizontalStrut(space1));
+		// TODO: Uncomment this to add in a git diff
+//		this.add(addButton(OptionBar.GIT_DIFF_ICON, OptionBar.ACTION_DIFF,
+//				OptionBar.DESCRIP_DIFF, OptionBar.GIT_DIFF_SELECTED_ICON));
+//		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_PUSH_ICON, OptionBar.ACTION_PUSH,
 				OptionBar.DESCRIP_PUSH, OptionBar.GIT_PUSH_SELECTED_ICON));
     this.add(Box.createHorizontalStrut(space1));
@@ -403,8 +404,9 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 			gitops.initRepo();
 		else if (a.equals(OptionBar.ACTION_ADD))
 			gitops.addFiles();
-		else if (a.equals(OptionBar.ACTION_DIFF))
-			System.out.println("Not yet implemented");
+		else if (a.equals(OptionBar.ACTION_DIFF)) {
+		  gitops.printDiffWithHead();
+		}
 		else if (a.equals(OptionBar.ACTION_PUSH)) {
 			System.out.println("Pushing...");
 			// TODO: Design a button different from the current push and the
