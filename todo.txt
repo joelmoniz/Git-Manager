@@ -1,0 +1,30 @@
+UI related
+==========
+[ ] Disable buttons when not applicable (Eg: When there is no repo, when there is no head, etc.)
+
+Adding functionality
+====================
+[ ] Revert the following commits:
+	[ ] 18779a3a56d343d (hide online part of tool)
+	[ ] "Expertise menu"
+[ ] Continue working on
+	[ ] git diff
+
+Missing functionality
+=====================
+[ ] git stash
+	[ ] basic stash
+	[ ] save
+	[ ] pop
+	[ ] apply
+[ ] git log
+[ ] git branch
+	[ ] add
+	[ ] rename
+	[ ] delete
+	[ ] view branch history as git graph
+[ ] git checkout
+[ ] git tag
+[ ] git rebase
+[ ] git merge
+[ ] git fetch
