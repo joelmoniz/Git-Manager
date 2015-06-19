@@ -93,6 +93,9 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		this.add(addButton(OptionBar.GIT_RM_ICON, OptionBar.ACTION_RM,
 				OptionBar.DESCRIP_RM, OptionBar.GIT_RM_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
+    this.add(addButton(OptionBar.GIT_LOG_ICON, OptionBar.ACTION_LOG,
+                       OptionBar.DESCRIP_LOG, OptionBar.GIT_LOG_SELECTED_ICON));
+    this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_STATUS_ICON, OptionBar.ACTION_STATUS,
 				OptionBar.DESCRIP_STATUS, OptionBar.GIT_STATUS_SELECTED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
@@ -429,6 +432,8 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		}
 		else if (a.equals(OptionBar.ACTION_REVERT))
 		  System.out.println("Not yet implemented");
+		else if (a.equals(OptionBar.ACTION_LOG))
+		  gitops.printLog();
 		else if (a.equals(OptionBar.ACTION_SNAP))
 			gitops.addAndCommit(getMessage("Enter commit message"));
 		else if (a.equals(OptionBar.ACTION_RM)) {

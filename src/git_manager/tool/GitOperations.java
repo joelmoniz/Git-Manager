@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -42,6 +43,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
 import org.eclipse.jgit.transport.PushResult;
@@ -429,5 +431,33 @@ public class GitOperations {
     } catch (GitAPIException e) {
       e.printStackTrace();
     }
+  }
+  
+  // Source: https://github.com/centic9/jgit-cookbook/blob/master/src/main/java/org/dstadler/jgit/porcelain/ShowLog.java
+  // Refer source for things like log for specific file, specific branch, etc.
+  void printLog() {
+    Repository repository = git.getRepository();
+
+    Iterable<RevCommit> logs;
+    try {
+      logs = git.log().call();
+      int count = 0;
+      System.out.println("\n");
+      for (RevCommit rev : logs) {
+          System.out.println("Commit ID: " + rev.getId().getName() + "\n" + 
+                             "Author: " + rev.getAuthorIdent().toExternalString() + "\n" + 
+                             "Date:   " + new Date(rev.getCommitTime()) + "\n\n" +
+                             rev.getFullMessage() + "\n" + 
+                             "----------------------------------------------------------");
+          count++;
+      }
+      System.out.println("\nTotal " + count + " commits overall on current branch");
+    } catch (NoHeadException e) {
+      e.printStackTrace();
+    } catch (GitAPIException e) {
+      e.printStackTrace();
+    }
+
+    repository.close();
   }
 }
