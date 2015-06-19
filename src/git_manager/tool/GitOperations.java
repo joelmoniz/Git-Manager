@@ -347,7 +347,7 @@ public class GitOperations {
 	   
 	 }
 	 
-	 void printFileStatus(String type, String description, Set<String> files) {
+	 private void printFileStatus(String type, String description, Set<String> files) {
 	   if (!files.isEmpty()) {
 	     if (type != null && !type.isEmpty()) {
 	       System.out.println("\n" + type + " Files (" + description + "):");
@@ -358,7 +358,7 @@ public class GitOperations {
 	   }
 	 }
 	 
-	 void resetHard() {
+	 public void resetHard() {
 	   ResetCommand reset = git.reset();
 	   reset.setRef(Constants.HEAD);
 //	   reset.addPath(".");
@@ -435,12 +435,10 @@ public class GitOperations {
   
   // Source: https://github.com/centic9/jgit-cookbook/blob/master/src/main/java/org/dstadler/jgit/porcelain/ShowLog.java
   // Refer source for things like log for specific file, specific branch, etc.
-  void printLog() {
-    Repository repository = git.getRepository();
-
-    Iterable<RevCommit> logs;
-    try {
-      logs = git.log().call();
+  public void printLogs() {
+    Iterable<RevCommit> logs = getLogs();
+    
+    if (logs != null) {
       int count = 0;
       System.out.println("\n");
       for (RevCommit rev : logs) {
@@ -452,12 +450,18 @@ public class GitOperations {
           count++;
       }
       System.out.println("\nTotal " + count + " commits overall on current branch");
+    }
+  }
+  
+  private Iterable<RevCommit> getLogs() {
+    Iterable<RevCommit> logs = null;
+    try {
+        logs = git.log().call();
     } catch (NoHeadException e) {
       e.printStackTrace();
     } catch (GitAPIException e) {
       e.printStackTrace();
     }
-
-    repository.close();
+    return logs;
   }
 }
