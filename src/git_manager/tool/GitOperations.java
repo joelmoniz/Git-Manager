@@ -1,19 +1,26 @@
 package git_manager.tool;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import org.eclipse.jgit.api.Git;
@@ -21,6 +28,7 @@ import org.eclipse.jgit.api.MergeResult;
 import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.ResetCommand;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
+import org.eclipse.jgit.api.RevertCommand;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.CheckoutConflictException;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
@@ -450,6 +458,97 @@ public class GitOperations {
           count++;
       }
       System.out.println("\nTotal " + count + " commits overall on current branch");
+    }
+  }
+  
+  public void revertCommit() {
+    RevertCommand revert = git.revert();
+    Iterable<RevCommit> logs = getLogs();
+    
+    if (logs != null) {
+//      revert.include(logs.iterator().next());
+      CommitCheckBox commitCheck = new CommitCheckBox(logs);
+      try {
+        for (RevCommit rc: commitCheck.logs) {
+          revert.include(rc);
+        }
+        revert.call();
+      } catch (NoMessageException e) {
+        e.printStackTrace();
+      } catch (UnmergedPathsException e) {
+        e.printStackTrace();
+      } catch (ConcurrentRefUpdateException e) {
+        e.printStackTrace();
+      } catch (WrongRepositoryStateException e) {
+        e.printStackTrace();
+      } catch (GitAPIException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  
+  class CommitCheckBox {
+    
+    ArrayList<RevCommit> logs;
+    ArrayList<JCheckBox> checkboxList;
+    JFrame frame;
+    JPanel cbPanel;
+    JScrollPane scrollPane;
+    
+    CommitCheckBox(Iterable<RevCommit> logsIterable) {
+      Iterator<RevCommit> logs = logsIterable.iterator();
+      this.logs = new ArrayList<>();
+      this.checkboxList = new ArrayList<>();
+      ArrayList<RevCommit> loglist = new ArrayList<>();
+      frame = new JFrame();
+      cbPanel = new JPanel();
+      Dimension d = new Dimension(300, 400);
+//      cbPanel.setPreferredSize(d);
+//      cbPanel.setMaximumSize(d);
+//      cbPanel.setMinimumSize(d);
+      cbPanel.setLayout(new BoxLayout(cbPanel, BoxLayout.Y_AXIS));
+      
+      while (logs.hasNext()) {
+        RevCommit log = logs.next();
+        loglist.add(log);
+        
+        JCheckBox cb = new JCheckBox(log.getShortMessage());
+        this.checkboxList.add(cb);
+        cbPanel.add(cb);
+      }
+      
+      scrollPane = new JScrollPane(cbPanel);
+      scrollPane.setPreferredSize(d);
+      scrollPane.setMaximumSize(d);
+      scrollPane.setMinimumSize(d);
+      scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+      Object[] options = { "Revert", "Cancel" };
+      // TODO: Probably get this on the EDT instead
+      int n = JOptionPane.showOptionDialog(new JFrame(), scrollPane, "",
+                                           JOptionPane.YES_NO_OPTION,
+                                           JOptionPane.QUESTION_MESSAGE, null,
+                                           options, options[1]);
+      if (n == JOptionPane.YES_OPTION) { // Afirmative
+        //.... 
+//        System.out.println("Yes!");
+        // TODO: Is this a little hacky?
+        int i = 0;
+        for (JCheckBox c : checkboxList) {
+          if (c.isSelected()) {
+            this.logs.add(loglist.get(i));
+          }
+          i++;
+        }
+      }
+      /*
+      Do Nothing
+      else if (n == JOptionPane.NO_OPTION) { // negative
+        System.out.println("No!");
+      }
+      else if (n == JOptionPane.CLOSED_OPTION) { // closed the dialog
+        System.out.println("Closed!");
+      }
+      */
     }
   }
   

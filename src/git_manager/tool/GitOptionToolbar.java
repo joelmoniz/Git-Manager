@@ -431,7 +431,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 			worker.execute();
 		}
 		else if (a.equals(OptionBar.ACTION_REVERT))
-		  System.out.println("Not yet implemented");
+		  gitops.revertCommit();
 		else if (a.equals(OptionBar.ACTION_LOG))
 		  gitops.printLogs();
 		else if (a.equals(OptionBar.ACTION_SNAP))

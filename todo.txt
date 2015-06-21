@@ -8,22 +8,41 @@ Adding functionality
 	[ ] 18779a3a56d343d (hide online part of tool)
 	[ ] "Expertise menu"
 [ ] Continue working on
-	[ ] git diff
+	[ ] git add
+		[ ] allow user to specify files
+	[ ] git pull
+		[ ] allow user to specify remote, branch
+		[ ] permit user to --rebase
+	[ ] git push
+		[ ] allow user to specify remote branch
+		[ ] permit force push
+	[ ] git checkout
+		[ ] to switch branches
+		[X] to make things identical to head
+
 
 Missing functionality
 =====================
+[ ] git commit
+[ ] git diff
+	[ ] get files that have changed, and their contents
+	[ ] show it exactly like output of git diff in the git bash
+	[ ] allow user to specify the 2 commits
 [ ] git stash
 	[ ] basic stash
 	[ ] save
 	[ ] pop
 	[ ] apply
-[ ] git log
+[ ] git reset
+	[ ] hard
+	[ ] soft
+[X] git log
 [ ] git branch
 	[ ] add
 	[ ] rename
 	[ ] delete
 	[ ] view branch history as git graph
-[ ] git checkout
+[ ] git remote
 [ ] git tag
 [ ] git rebase
 [ ] git merge
