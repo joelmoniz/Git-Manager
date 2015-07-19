@@ -468,21 +468,29 @@ public class GitOperations {
     if (logs != null) {
 //      revert.include(logs.iterator().next());
       CommitCheckBox commitCheck = new CommitCheckBox(logs);
-      try {
-        for (RevCommit rc: commitCheck.logs) {
-          revert.include(rc);
+      if (commitCheck.logs.isEmpty()) {
+        System.out.println("No commits selected to be undone");
+      }
+      else {
+        try {
+          System.out.println("The following commits will be undone:");
+          for (RevCommit rc: commitCheck.logs) {
+            revert.include(rc);
+            System.out.println("  " + rc.getShortMessage());
+          }
+          revert.call();
+          System.out.println("Done.");
+        } catch (NoMessageException e) {
+          e.printStackTrace();
+        } catch (UnmergedPathsException e) {
+          e.printStackTrace();
+        } catch (ConcurrentRefUpdateException e) {
+          e.printStackTrace();
+        } catch (WrongRepositoryStateException e) {
+          e.printStackTrace();
+        } catch (GitAPIException e) {
+          e.printStackTrace();
         }
-        revert.call();
-      } catch (NoMessageException e) {
-        e.printStackTrace();
-      } catch (UnmergedPathsException e) {
-        e.printStackTrace();
-      } catch (ConcurrentRefUpdateException e) {
-        e.printStackTrace();
-      } catch (WrongRepositoryStateException e) {
-        e.printStackTrace();
-      } catch (GitAPIException e) {
-        e.printStackTrace();
       }
     }
   }

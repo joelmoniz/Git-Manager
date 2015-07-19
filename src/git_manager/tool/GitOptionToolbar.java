@@ -411,7 +411,9 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		  gitops.printDiffWithHead();
 		}
 		else if (a.equals(OptionBar.ACTION_PUSH)) {
-			System.out.println("Pushing...");
+		  ((JButton)e.getSource()).getModel().setRollover(false);
+		  buttonDescription.setText("");
+		  System.out.println("Pushing...");
 			// TODO: Design a button different from the current push and the
 			// push that displays on mouseover which remains until the push
 			// action is complete, and then changes back to original push
@@ -430,12 +432,18 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 			};
 			worker.execute();
 		}
-		else if (a.equals(OptionBar.ACTION_REVERT))
+		else if (a.equals(OptionBar.ACTION_REVERT)) {
+		  ((JButton)e.getSource()).getModel().setRollover(false);
+		  buttonDescription.setText("");
 		  gitops.revertCommit();
+		}
 		else if (a.equals(OptionBar.ACTION_LOG))
 		  gitops.printLogs();
-		else if (a.equals(OptionBar.ACTION_SNAP))
+		else if (a.equals(OptionBar.ACTION_SNAP)) {
+		  ((JButton)e.getSource()).getModel().setRollover(false);
+		  buttonDescription.setText("");
 			gitops.addAndCommit(getMessage("Enter commit message"));
+		}
 		else if (a.equals(OptionBar.ACTION_RM)) {
 		  ((JButton)e.getSource()).getModel().setRollover(false);
 		  buttonDescription.setText("");
