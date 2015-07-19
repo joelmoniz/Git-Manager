@@ -59,7 +59,7 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 
 import processing.app.Base;
-import processing.app.Editor;
+import processing.app.ui.Editor;
 
 public class GitOperations {
 

@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import processing.app.Base;
-import processing.app.Editor;
-import processing.app.Toolkit;
+import processing.app.ui.Editor;
+import processing.app.ui.Toolkit;
 
 public class GitGUIFrame extends JFrame implements ActionListener {
 

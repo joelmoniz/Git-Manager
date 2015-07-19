@@ -29,8 +29,8 @@ import git_manager.constants.ProjectDetails;
 
 import java.awt.EventQueue;
 
-import processing.app.Editor;
 import processing.app.tools.Tool;
+import processing.app.ui.Editor;
 
 public class GitManager implements Tool {
 

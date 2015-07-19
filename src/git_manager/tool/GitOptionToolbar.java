@@ -26,7 +26,7 @@ import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
 
 import processing.app.Base;
-import processing.app.Editor;
+import processing.app.ui.Editor;
 
 public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		ActionListener {
