@@ -51,6 +51,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.CredentialsProvider;
 import org.eclipse.jgit.transport.FetchResult;
@@ -94,10 +95,11 @@ public class GitOperations {
 		}
 
 		try {
-			System.out.println(gitDir.getAbsolutePath());
+//			System.out.println(gitDir.getAbsolutePath());
 			Git.init().setDirectory(thisDir).setBare(false).call();
-			System.out.println("New repo created.");
+			getConfigParameters();
 			createGitIgnore();
+      System.out.println("New repo created.");
 		} catch (InvalidRemoteException e) {
 			e.printStackTrace();
 		} catch (TransportException e) {
@@ -112,7 +114,79 @@ public class GitOperations {
 	  InputStream sourceGitignore = this.getClass().getResourceAsStream(GITIGNORE_LOCATION);
 	  File destGitignore = new File(thisDir.getAbsolutePath() + "\\.gitignore");
 	  try {
-      Files.copy(sourceGitignore, destGitignore.toPath());
+	    if (!destGitignore.exists()) {
+	      Files.copy(sourceGitignore, destGitignore.toPath());
+	    }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+	}
+	
+	public void getConfigParameters() {
+	  StoredConfig config = git.getRepository().getConfig();
+	  String name = config.getString("user", null, "name");
+	  String email = config.getString("user", null, "email");
+	  if (name != null && email != null) {
+      Object[] options = { "Yes", "No" };
+      // TODO: Probably get this on the EDT instead
+      int n = JOptionPane.showOptionDialog(new JFrame(), "The following global "
+          + "user details have been detected:\n    Name: " 
+          + name + "\n    Email: " + email + "\n\nContinue with these details?",
+          "Who's there?",
+          JOptionPane.YES_NO_OPTION,
+          JOptionPane.QUESTION_MESSAGE, null,
+          options, options[1]);
+      if (n==JOptionPane.YES_OPTION) {
+        return;
+      }
+	  }
+	  
+	  // TODO: Definitely make this nicer- better parsing and error handling, etc.
+	  // TODO: On the EDT with this too!
+	  // Adapted from http://www.edu4java.com/en/swing/swing3.html
+	  name = "";
+	  email = "";
+	  while (name.isEmpty() || email.isEmpty()) {
+      JPanel configPanel = new JPanel();
+      configPanel.setLayout(null);
+      configPanel.setPreferredSize(new Dimension(300, 80));
+  
+      JLabel nameLabel = new JLabel("Name");
+      nameLabel.setBounds(10, 10, 80, 25);
+      configPanel.add(nameLabel);
+  
+      JTextField nameText = new JTextField(20);
+      nameText.setBounds(100, 10, 160, 25);
+      configPanel.add(nameText);
+      nameText.setText(name);
+  
+      JLabel emailLabel = new JLabel("Email");
+      emailLabel.setBounds(10, 40, 80, 25);
+      configPanel.add(emailLabel);
+  
+      JTextField emailText = new JTextField(20);
+      emailText.setBounds(100, 40, 160, 25);
+      configPanel.add(emailText);
+      emailText.setText(email);
+  
+      JOptionPane.showMessageDialog(new JFrame(), 
+                                    configPanel, "User details",
+                                    JOptionPane.PLAIN_MESSAGE, null);
+      
+      name = nameText.getText();
+      email = emailText.getText();
+      
+      if (name.isEmpty() || email.isEmpty()) {
+        JOptionPane.showMessageDialog(new JFrame(), 
+                                      "Neither the name nor the email address can be left blank", "Nopes",
+                                      JOptionPane.ERROR_MESSAGE, null);   
+      }
+	  }
+	  
+    config.setString("user", null, "name", name);
+    config.setString("user", null, "email", email);
+    try {
+      config.save();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -532,7 +606,7 @@ public class GitOperations {
       scrollPane.getVerticalScrollBar().setUnitIncrement(16);
       Object[] options = { "Revert", "Cancel" };
       // TODO: Probably get this on the EDT instead
-      int n = JOptionPane.showOptionDialog(new JFrame(), scrollPane, "",
+      int n = JOptionPane.showOptionDialog(new JFrame(), scrollPane, "Undo Commits",
                                            JOptionPane.YES_NO_OPTION,
                                            JOptionPane.QUESTION_MESSAGE, null,
                                            options, options[1]);

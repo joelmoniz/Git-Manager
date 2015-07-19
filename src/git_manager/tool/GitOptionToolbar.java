@@ -403,8 +403,11 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String a = e.getActionCommand();
-		if (a.equals(OptionBar.ACTION_INIT))
+		if (a.equals(OptionBar.ACTION_INIT)) {
+		  ((JButton)e.getSource()).getModel().setRollover(false);
+		  buttonDescription.setText("");
 			gitops.initRepo();
+		}
 		else if (a.equals(OptionBar.ACTION_ADD))
 			gitops.addFiles();
 		else if (a.equals(OptionBar.ACTION_DIFF)) {

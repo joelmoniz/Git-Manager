@@ -43,6 +43,7 @@ Missing functionality
 	[ ] delete
 	[ ] view branch history as git graph
 [ ] git remote
+[ ] git config
 [ ] git tag
 [ ] git rebase
 [ ] git merge
