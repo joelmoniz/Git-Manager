@@ -562,6 +562,10 @@ public class GitOperations {
   // Source: https://github.com/centic9/jgit-cookbook/blob/master/src/main/java/org/dstadler/jgit/porcelain/ShowLog.java
   // Refer source for things like log for specific file, specific branch, etc.
   public void printLogs() {
+    if (!hasCommit()) {
+      System.out.println("\nNo commits exist yet. No logs to show.");
+      return;
+    }
     Iterable<RevCommit> logs = getLogs();
     
     if (logs != null) {
