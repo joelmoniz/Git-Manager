@@ -3,8 +3,11 @@ package git_manager.tool;
 import git_manager.constants.OptionBar;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -18,9 +21,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.border.Border;
 import javax.swing.event.MouseInputListener;
@@ -44,6 +49,8 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 	private JLabel buttonDescription;
 	private GitOperations gitops;
 	private Editor editor;
+	private JToolBar buttonToolbar;
+  private JToolBar descriptionToolbar;
 
 	public GitOptionToolbar(Editor e) {
 		this.setName("ActionBar");
@@ -51,6 +58,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		this.setVisible(true);
 		this.setFloatable(false);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		this.setOrientation(JToolBar.VERTICAL);
 
 		buttonDescription = new JLabel();
 		buttonDescription.setText("");
@@ -61,59 +69,104 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		// points = new ArrayList<PointCoordinates>();
 		buttons = new ArrayList<JButton>();
 
+		buttonToolbar = new JToolBar();
+		descriptionToolbar = new JToolBar();
+
 		editor = e;
 
 		gitops = new GitOperations(editor);
 
-		populateToolBar();
+		populateButtonBar();
+		populateDescribeBar();
+		
+		this.add(buttonToolbar);//, JToolBar.LEFT_ALIGNMENT);
+		this.add(descriptionToolbar);//, JToolBar.LEFT_ALIGNMENT);
+		
+//		buttonToolbar.setPreferredSize(this.getPreferredSize());
+		buttonToolbar.setBackground(Color.BLACK);
+		buttonToolbar.setOpaque(true);
+		buttonToolbar.setFloatable(false);
+		
+		descriptionToolbar.setBackground(Color.BLACK);
+		descriptionToolbar.setOpaque(false);
+		descriptionToolbar.setFloatable(false);
+		
+//		JLabel t = new JLabel("Test");
+//		t.setForeground(Color.WHITE);
+//		descriptionToolbar.add(t);
+		
 //		addMouseListener(this);
 //		addMouseMotionListener(this);
 	}
 
-	private void populateToolBar() {
-		this.add(Box.createHorizontalStrut(space1));
-		this.add(addButton(OptionBar.GIT_INIT_ICON, OptionBar.ACTION_INIT,
+	private void populateButtonBar() {
+		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
+		this.buttonToolbar.add(addButton(OptionBar.GIT_INIT_ICON, OptionBar.ACTION_INIT,
 				OptionBar.DESCRIP_INIT, OptionBar.GIT_INIT_SELECTED_ICON,
 				OptionBar.GIT_INIT_DISABLED_ICON));
-		this.add(Box.createHorizontalStrut(space1));
-		this.add(addButton(OptionBar.GIT_SNAP_ICON, OptionBar.ACTION_SNAP,
+		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
+		this.buttonToolbar.add(addButton(OptionBar.GIT_SNAP_ICON, OptionBar.ACTION_SNAP,
 				OptionBar.DESCRIP_SNAP, OptionBar.GIT_SNAP_SELECTED_ICON,
 				OptionBar.GIT_SNAP_DISABLED_ICON));
-		this.add(Box.createHorizontalStrut(space1));
+		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 		// TODO: Uncomment this to add in a git diff
 //		this.add(addButton(OptionBar.GIT_DIFF_ICON, OptionBar.ACTION_DIFF,
 //				OptionBar.DESCRIP_DIFF, OptionBar.GIT_DIFF_SELECTED_ICON));
 //		this.add(Box.createHorizontalStrut(space1));
-		this.add(addButton(OptionBar.GIT_PUSH_ICON, OptionBar.ACTION_PUSH,
+		this.buttonToolbar.add(addButton(OptionBar.GIT_PUSH_ICON, OptionBar.ACTION_PUSH,
 				OptionBar.DESCRIP_PUSH, OptionBar.GIT_PUSH_SELECTED_ICON,
 				OptionBar.GIT_PUSH_DISABLED_ICON));
-    this.add(Box.createHorizontalStrut(space1));
-    this.add(addButton(OptionBar.GIT_PULL_ICON, OptionBar.ACTION_PULL,
+    this.buttonToolbar.add(Box.createHorizontalStrut(space1));
+    this.buttonToolbar.add(addButton(OptionBar.GIT_PULL_ICON, OptionBar.ACTION_PULL,
                        OptionBar.DESCRIP_PULL, OptionBar.GIT_PULL_SELECTED_ICON,
                        OptionBar.GIT_PULL_DISABLED_ICON));
-		this.add(Box.createHorizontalStrut(space1));
-		this.add(addButton(OptionBar.GIT_REVERT_ICON, OptionBar.ACTION_REVERT,
+		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
+		this.buttonToolbar.add(addButton(OptionBar.GIT_REVERT_ICON, OptionBar.ACTION_REVERT,
 				OptionBar.DESCRIP_REVERT, OptionBar.GIT_REVERT_SELECTED_ICON,
 				OptionBar.GIT_REVERT_DISABLED_ICON));
-		this.add(Box.createHorizontalStrut(space1));
-		this.add(addButton(OptionBar.GIT_RM_ICON, OptionBar.ACTION_RM,
+		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
+		this.buttonToolbar.add(addButton(OptionBar.GIT_RM_ICON, OptionBar.ACTION_RM,
 				OptionBar.DESCRIP_RM, OptionBar.GIT_RM_SELECTED_ICON,
 				OptionBar.GIT_RM_DISABLED_ICON));
-		this.add(Box.createHorizontalStrut(space1));
-    this.add(addButton(OptionBar.GIT_LOG_ICON, OptionBar.ACTION_LOG,
+		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
+    this.buttonToolbar.add(addButton(OptionBar.GIT_LOG_ICON, OptionBar.ACTION_LOG,
                        OptionBar.DESCRIP_LOG, OptionBar.GIT_LOG_SELECTED_ICON,
                        OptionBar.GIT_LOG_DISABLED_ICON));
-    this.add(Box.createHorizontalStrut(space1));
-		this.add(addButton(OptionBar.GIT_STATUS_ICON, OptionBar.ACTION_STATUS,
+    this.buttonToolbar.add(Box.createHorizontalStrut(space1));
+		this.buttonToolbar.add(addButton(OptionBar.GIT_STATUS_ICON, OptionBar.ACTION_STATUS,
 				OptionBar.DESCRIP_STATUS, OptionBar.GIT_STATUS_SELECTED_ICON,
 				OptionBar.GIT_STATUS_DISABLED_ICON));
-		this.add(Box.createHorizontalStrut(space1));
-		this.add(Box.createHorizontalStrut(space1));
-		this.add(buttonDescription);
+		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
+		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
+		this.buttonToolbar.add(buttonDescription);
 
-		this.add(Box.createHorizontalGlue());
+		this.buttonToolbar.add(Box.createHorizontalGlue());
 
 	}
+  
+  private void populateDescribeBar() {
+
+     this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
+     this.descriptionToolbar.add(addLabel("Repo", 41+43, 1));
+     this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
+     // TODO: Uncomment this to add in a git diff
+//     this.add(addButton(OptionBar.GIT_DIFF_ICON, OptionBar.ACTION_DIFF,
+//         OptionBar.DESCRIP_DIFF, OptionBar.GIT_DIFF_SELECTED_ICON));
+//     this.add(Box.createHorizontalStrut(space1));
+     this.descriptionToolbar.add(addLabel("Online", 41*2, 1));
+     this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
+     this.descriptionToolbar.add(addLabel("Undo", 41+42, 1));
+     this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
+     this.descriptionToolbar.add(addLabel("Logs", 41+42, 1));
+     this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
+     this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
+
+     // TODO: Can add something to descibe in more details here
+     // this.descriptionToolbar.add(buttonDescription);
+
+     this.descriptionToolbar.add(Box.createHorizontalGlue());
+
+   }
 
 	private JButton addButton(String imageLocation, String actionCommand,
 			String buttonName, String rolloverImageLocation, 
@@ -167,6 +220,17 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		buttons.add(b);
 
 		return b;
+	}
+	
+	private JLabel addLabel(String content, int buttonWidth, int separatorCount) {
+	  JLabel label = new JLabel(content, SwingConstants.CENTER);
+//	  label.setAlignmentX(Component.BOTTOM_ALIGNMENT);
+//	  label.setAlignmentY(Component.);
+	  label.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.WHITE));
+	  label.setForeground(Color.WHITE);
+	  label.setPreferredSize(new Dimension(buttonWidth + separatorCount*space1, 
+	                                       label.getHeight()));
+	  return label;
 	}
 
 	@Override
