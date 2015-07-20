@@ -1,6 +1,11 @@
 UI related
 ==========
-[ ] Disable buttons when not applicable (Eg: When there is no repo, when there is no head, etc.)
+[X] Disable buttons when not applicable (Eg: When there is no repo, when there is no head, etc.)
+[ ] Add a desciption in the lower toolbar
+	[ ] Of the tool when enabled/the git equivalent
+	[ ] Why it is greyed out when disabled
+[ ] Make the description of disabled button light grey instad of white
+[ ] Make the tool theme based on processing color scheme
 
 Adding functionality
 ====================
@@ -11,10 +16,13 @@ Adding functionality
 	[ ] git add
 		[ ] allow user to specify files
 	[ ] git pull
-		[ ] allow user to specify remote, branch
+		[ ] allow user to specify remote
+		[ ] allow user to specify branch
 		[ ] permit user to --rebase
 	[ ] git push
-		[ ] allow user to specify remote branch
+		[ ] read in uname, origin from config files
+		[ ] allow user to specify remote
+		[ ] allow user to specify branch
 		[ ] permit force push
 	[ ] git checkout
 		[ ] to switch branches

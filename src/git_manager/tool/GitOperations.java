@@ -88,7 +88,7 @@ public class GitOperations {
 	}
 
 	public void initRepo() {
-		if (gitDir.exists()) {
+		if (repoExists()) {
 			System.out.println("Repo already exists!");
 			return;
 		}
@@ -107,6 +107,51 @@ public class GitOperations {
 			e.printStackTrace();
 		}
 	}
+	
+	public boolean repoExists() {
+	  return gitDir.exists();
+	}
+  
+  public boolean hasCommit() {
+    if (!repoExists())
+      return false;
+    Iterable<RevCommit> commits;
+    try {
+      commits = git.log().call();
+      for( RevCommit commit : commits ) {
+        return true;
+      }
+    } catch (NoHeadException e) {
+      // This error keeps popping up when there are no commits
+      // Don't wanna freak out/annoy the user
+//      e.printStackTrace();
+    } catch (GitAPIException e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+  
+  public int getCommitCount() {
+    if (!repoExists())
+      return -1;
+    Iterable<RevCommit> commits;
+    int count = -1;
+    try {
+      commits = git.log().call();
+      count = 0;
+      for( RevCommit commit : commits ) {
+        count++;
+      }
+    } catch (NoHeadException e) {
+      // This error keeps popping up when there are no commits
+      // Don't wanna freak out/annoy the user
+      count = 0;
+//      e.printStackTrace();
+    } catch (GitAPIException e) {
+      e.printStackTrace();
+    }
+    return count;
+  }
 	
 	// TODO: Ensure that repo name == sketchname
 	public void createGitIgnore() {

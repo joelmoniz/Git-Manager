@@ -72,6 +72,7 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		}
 
     panel.add(tool, c);
+//    panel.add(tool, c);
 
     this.setVisible(true);
 

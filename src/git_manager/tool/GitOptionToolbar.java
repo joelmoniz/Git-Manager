@@ -91,6 +91,8 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		descriptionToolbar.setOpaque(false);
 		descriptionToolbar.setFloatable(false);
 		
+		disableButtons();
+		
 //		JLabel t = new JLabel("Test");
 //		t.setForeground(Color.WHITE);
 //		descriptionToolbar.add(t);
@@ -147,7 +149,9 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
   private void populateDescribeBar() {
 
      this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
-     this.descriptionToolbar.add(addLabel("Repo", 41+43, 1));
+     this.descriptionToolbar.add(addLabel("Start", 41, 0));
+     this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
+     this.descriptionToolbar.add(addLabel("Save", 43, 0));
      this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
      // TODO: Uncomment this to add in a git diff
 //     this.add(addButton(OptionBar.GIT_DIFF_ICON, OptionBar.ACTION_DIFF,
@@ -479,6 +483,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 	@Override
 	public void mouseEntered(MouseEvent e) {
     String prnt = e.getComponent().getName();
+//    TODO: if ()
     buttonDescription.setText(prnt);
 	}
 
@@ -570,7 +575,27 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
         };
         worker.execute();
     }
+		disableButtons();
 
+	}
+	
+	public void disableButtons() {
+		for (JButton b: buttons) {
+			if (b.getName().equals(OptionBar.DESCRIP_INIT)) {
+				b.setEnabled(!gitops.repoExists());
+			}
+			else if (b.getName().equals(OptionBar.DESCRIP_SNAP)
+			    || b.getName().equals(OptionBar.DESCRIP_PULL)
+			    || b.getName().equals(OptionBar.DESCRIP_LOG)
+			    || b.getName().equals(OptionBar.DESCRIP_STATUS)) {
+				b.setEnabled(gitops.repoExists());
+			}
+			else if (b.getName().equals(OptionBar.DESCRIP_PUSH) 
+			   || b.getName().equals(OptionBar.DESCRIP_REVERT)
+			   || b.getName().equals(OptionBar.DESCRIP_RM)) {
+				b.setEnabled(gitops.hasCommit());
+			}
+		}
 	}
 
 	public String getMessage(String dialogText) {
