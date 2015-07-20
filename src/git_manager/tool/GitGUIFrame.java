@@ -22,6 +22,8 @@ import processing.app.ui.Toolkit;
 
 public class GitGUIFrame extends JFrame implements ActionListener {
 
+  private static final long serialVersionUID = -7082287925218003592L;
+
 	Editor editor;
 	GitOperations gitops;
 	JPanel panel;
@@ -30,8 +32,6 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 	// static Point frameLocation;
 	
 	int mode = 0;
-
-	private static final long serialVersionUID = 1L;
 
 	public GitGUIFrame(Editor e) {
 

@@ -31,8 +31,9 @@ import processing.app.ui.Editor;
 public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	private final int space1 = 5;
+  private static final long serialVersionUID = 6679503189108207242L;
+
+	private static final int space1 = 5;
 	// Expertise Selection Menu variables
 	private int elmX2, elmX1, elmY1, elmY2, elmTextWidth, elmTextAscent;
 	// ArrayList<PointCoordinates> points;
@@ -72,32 +73,40 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 	private void populateToolBar() {
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_INIT_ICON, OptionBar.ACTION_INIT,
-				OptionBar.DESCRIP_INIT, OptionBar.GIT_INIT_SELECTED_ICON));
+				OptionBar.DESCRIP_INIT, OptionBar.GIT_INIT_SELECTED_ICON,
+				OptionBar.GIT_INIT_DISABLED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_SNAP_ICON, OptionBar.ACTION_SNAP,
-				OptionBar.DESCRIP_SNAP, OptionBar.GIT_SNAP_SELECTED_ICON));
+				OptionBar.DESCRIP_SNAP, OptionBar.GIT_SNAP_SELECTED_ICON,
+				OptionBar.GIT_SNAP_DISABLED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		// TODO: Uncomment this to add in a git diff
 //		this.add(addButton(OptionBar.GIT_DIFF_ICON, OptionBar.ACTION_DIFF,
 //				OptionBar.DESCRIP_DIFF, OptionBar.GIT_DIFF_SELECTED_ICON));
 //		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_PUSH_ICON, OptionBar.ACTION_PUSH,
-				OptionBar.DESCRIP_PUSH, OptionBar.GIT_PUSH_SELECTED_ICON));
+				OptionBar.DESCRIP_PUSH, OptionBar.GIT_PUSH_SELECTED_ICON,
+				OptionBar.GIT_PUSH_DISABLED_ICON));
     this.add(Box.createHorizontalStrut(space1));
     this.add(addButton(OptionBar.GIT_PULL_ICON, OptionBar.ACTION_PULL,
-                       OptionBar.DESCRIP_PULL, OptionBar.GIT_PULL_SELECTED_ICON));
+                       OptionBar.DESCRIP_PULL, OptionBar.GIT_PULL_SELECTED_ICON,
+                       OptionBar.GIT_PULL_DISABLED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_REVERT_ICON, OptionBar.ACTION_REVERT,
-				OptionBar.DESCRIP_REVERT, OptionBar.GIT_REVERT_SELECTED_ICON));
+				OptionBar.DESCRIP_REVERT, OptionBar.GIT_REVERT_SELECTED_ICON,
+				OptionBar.GIT_REVERT_DISABLED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_RM_ICON, OptionBar.ACTION_RM,
-				OptionBar.DESCRIP_RM, OptionBar.GIT_RM_SELECTED_ICON));
+				OptionBar.DESCRIP_RM, OptionBar.GIT_RM_SELECTED_ICON,
+				OptionBar.GIT_RM_DISABLED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
     this.add(addButton(OptionBar.GIT_LOG_ICON, OptionBar.ACTION_LOG,
-                       OptionBar.DESCRIP_LOG, OptionBar.GIT_LOG_SELECTED_ICON));
+                       OptionBar.DESCRIP_LOG, OptionBar.GIT_LOG_SELECTED_ICON,
+                       OptionBar.GIT_LOG_DISABLED_ICON));
     this.add(Box.createHorizontalStrut(space1));
 		this.add(addButton(OptionBar.GIT_STATUS_ICON, OptionBar.ACTION_STATUS,
-				OptionBar.DESCRIP_STATUS, OptionBar.GIT_STATUS_SELECTED_ICON));
+				OptionBar.DESCRIP_STATUS, OptionBar.GIT_STATUS_SELECTED_ICON,
+				OptionBar.GIT_STATUS_DISABLED_ICON));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(Box.createHorizontalStrut(space1));
 		this.add(buttonDescription);
@@ -107,12 +116,33 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 	}
 
 	private JButton addButton(String imageLocation, String actionCommand,
-			String buttonName, String rolloverImageLocation) {
+			String buttonName, String rolloverImageLocation, 
+			String disabledImageLocation) {
 		JButton b = new JButton();
 		ImageIcon icon = new ImageIcon(this.getClass().getResource(
 				imageLocation));
 		ImageIcon rolloverIcon = new ImageIcon(this.getClass().getResource(
 				rolloverImageLocation));
+		
+		/*
+//		Image normalImage = icon.getImage();
+//		Image grayImage = GrayFilter.createDisabledImage(normalImage);
+		
+    final int w = icon.getIconWidth();
+    final int h = icon.getIconHeight();
+    GraphicsEnvironment ge =
+        GraphicsEnvironment.getLocalGraphicsEnvironment();
+    GraphicsDevice gd = ge.getDefaultScreenDevice();
+    GraphicsConfiguration gc = gd.getDefaultConfiguration();
+    BufferedImage image = gc.createCompatibleImage(w, h);
+    Graphics2D g2d = image.createGraphics();
+    icon.paintIcon(null, g2d, 0, 0);
+    Image grayImage = GrayFilter.createDisabledImage(image);
+    */
+    
+    ImageIcon disabledIcon = 
+        new ImageIcon(this.getClass().getResource(disabledImageLocation));
+		
 		// b.setLayout(new BorderLayout());
 		// b.setIcon(icon);
 		// JLabel label = new JLabel(icon);
@@ -120,6 +150,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		b.setIcon(icon);
 		b.setRolloverEnabled(true);
 		b.setRolloverIcon(rolloverIcon);
+		b.setDisabledIcon(disabledIcon);
 		// b.setIconTextGap(0);
 		// b.setMargin(new Insets(0, 0, 0, 0));
 		// b.setSize(d);
@@ -481,5 +512,4 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 	public String getMessage(String dialogText) {
 		return JOptionPane.showInputDialog(this, dialogText, null);
 	}
-
 }

@@ -49,6 +49,29 @@ public static final String GIT_STATUS_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	+ "gitstatus_selected.png";
 public static final String GIT_SNAP_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	+ "snapshot_selected.png";
+
+
+public static final String GIT_INIT_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitinit_disabled.png";
+public static final String GIT_ADD_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitadd_disabled.png";
+public static final String GIT_DIFF_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitdiff_disabled.png";
+public static final String GIT_PUSH_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitpush_disabled.png";
+public static final String GIT_PULL_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitpull_disabled.png";
+public static final String GIT_REVERT_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitrevert_disabled.png";
+public static final String GIT_RM_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitrm_disabled.png";
+public static final String GIT_LOG_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitlog_disabled.png";
+public static final String GIT_STATUS_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "gitstatus_disabled.png";
+public static final String GIT_SNAP_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
++ "snapshot_disabled.png";
+
 	
 	public static final String REPO_BITBUCKET = ONLINE_REPO_ICON_PATH
 			+ "bitbucket_logo.png";

@@ -73,12 +73,11 @@ public class GitOperations {
 
 	public GitOperations(Editor editor) {
 		this.editor = editor;
-		if (Base.isLinux())
-			gitDir = new File(editor.getSketch().getFolder().getAbsolutePath()
-					+ "/.git");
-		else
-			gitDir = new File(editor.getSketch().getFolder().getAbsolutePath()
-					+ "\\.git");
+//		if (Base.isLinux())
+//			gitDir = new File(editor.getSketch().getFolder().getAbsolutePath()
+//					+ "/.git");
+//		else
+		gitDir = new File(editor.getSketch().getFolder().getAbsolutePath(), ".git");
 		thisDir = new File(editor.getSketch().getFolder().getAbsolutePath());
 		try {
 			git = new Git(new FileRepository(gitDir));
