@@ -162,7 +162,8 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 		}
 		else {
 		  this.pack();
-		  setPreferredSize(new Dimension(this.getWidth() + 135, this.getHeight()));
+		  setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
+		  tool.clearDescription();
 		  setResizable(false); //TODO: Make true for expertise
 		}
 		

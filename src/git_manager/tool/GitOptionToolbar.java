@@ -2,11 +2,14 @@ package git_manager.tool;
 
 import git_manager.constants.OptionBar;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,12 +31,13 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputListener;
 
 import processing.app.Base;
 import processing.app.ui.Editor;
 
-public class GitOptionToolbar extends JToolBar implements MouseInputListener,
+public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		ActionListener {
 
   private static final long serialVersionUID = 6679503189108207242L;
@@ -49,47 +53,52 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 	private JLabel buttonDescription;
 	private GitOperations gitops;
 	private Editor editor;
-	private JToolBar buttonToolbar;
-  private JToolBar descriptionToolbar;
+	private JPanel buttonToolbar;
+  private JPanel descriptionToolbar;
 
 	public GitOptionToolbar(Editor e) {
 		this.setName("ActionBar");
-		this.setBounds(0, 0, 400, 145);
+		this.setLayout(new BorderLayout());
+//		this.setBounds(0, 0, 400, 145);
 		this.setVisible(true);
-		this.setFloatable(false);
+//		this.setFloatable(false);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		this.setOrientation(JToolBar.VERTICAL);
+//		this.setOrientation(JToolBar.VERTICAL);
 
 		buttonDescription = new JLabel();
-		buttonDescription.setText("");
-		if (Base.isLinux())
-			buttonDescription.setForeground(Color.BLACK);
-		else
+		// TODO: Add padding instead of adding the space
+		buttonDescription.setText(OptionBar.DESCRIP_STATUS + "   ");
+//		if (Base.isLinux())
+//			buttonDescription.setForeground(Color.BLACK);
+//		else
 			buttonDescription.setForeground(Color.WHITE);
 		// points = new ArrayList<PointCoordinates>();
 		buttons = new ArrayList<JButton>();
 
-		buttonToolbar = new JToolBar();
-		descriptionToolbar = new JToolBar();
+		buttonToolbar = new JPanel();
+		descriptionToolbar = new JPanel();
 
 		editor = e;
 
 		gitops = new GitOperations(editor);
 
+		buttonToolbar.setLayout(new BoxLayout(buttonToolbar, BoxLayout.LINE_AXIS));
+		buttonToolbar.setBorder(new EmptyBorder(10,0,0,0));
+		descriptionToolbar.setLayout(new BoxLayout(descriptionToolbar, BoxLayout.LINE_AXIS));
 		populateButtonBar();
 		populateDescribeBar();
 		
-		this.add(buttonToolbar);//, JToolBar.LEFT_ALIGNMENT);
-		this.add(descriptionToolbar);//, JToolBar.LEFT_ALIGNMENT);
+		this.add(buttonToolbar, BorderLayout.PAGE_START);
+		this.add(descriptionToolbar, BorderLayout.CENTER);//, JToolBar.LEFT_ALIGNMENT);
 		
 //		buttonToolbar.setPreferredSize(this.getPreferredSize());
 		buttonToolbar.setBackground(Color.BLACK);
 		buttonToolbar.setOpaque(true);
-		buttonToolbar.setFloatable(false);
+//		buttonToolbar.setFloatable(false);
 		
 		descriptionToolbar.setBackground(Color.BLACK);
-		descriptionToolbar.setOpaque(false);
-		descriptionToolbar.setFloatable(false);
+		descriptionToolbar.setOpaque(true);
+//		descriptionToolbar.setFloatable(false);
 		
 		disableButtons();
 		
@@ -99,6 +108,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		
 //		addMouseListener(this);
 //		addMouseMotionListener(this);
+		this.setPreferredSize(this.getPreferredSize());
 	}
 
 	private void populateButtonBar() {
@@ -151,7 +161,7 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
      this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
      this.descriptionToolbar.add(addLabel("Start", 41, 0));
      this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
-     this.descriptionToolbar.add(addLabel("Save", 43, 0));
+     this.descriptionToolbar.add(addLabel("Save", 41, 0));
      this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
      // TODO: Uncomment this to add in a git diff
 //     this.add(addButton(OptionBar.GIT_DIFF_ICON, OptionBar.ACTION_DIFF,
@@ -466,11 +476,15 @@ public class GitOptionToolbar extends JToolBar implements MouseInputListener,
 		// Replace with sum of all image widths
 		popup.requestFocus();
 	}
-
-	@Override
-	public boolean isRollover() {
-		return super.isRollover();
+	
+	public void clearDescription() {
+		buttonDescription.setText("");
 	}
+
+//	@Override
+//	public boolean isRollover() {
+//		return super.isRollover();
+//	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
