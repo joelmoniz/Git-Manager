@@ -136,6 +136,17 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		
 		this.add(pna);
 //		this.add(Box.createHorizontalGlue());
+//		
+//		JPanel pan = new JPanel();
+//		pan.setLayout(new BoxLayout(pan, BoxLayout.LINE_AXIS));
+//		pan.setBackground(Color.BLACK);
+//		pan.setOpaque(true);
+//		
+//		pan.add(Box.createHorizontalGlue());
+//		pan.add(tinyToolbar);
+//		
+//		this.add(pan);
+		
 		this.add(tinyToolbar);
 		
 //		buttonToolbar.setPreferredSize(this.getPreferredSize());
@@ -235,14 +246,20 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 
    }
   
+// TODO: Figure out why on earth all havoc breaks lose when I use 
+//  Box.createVerticalStruct() instead of the incorrect Box.createHorizontalStruct()
   private void populateTinyBar() {
-    this.tinyToolbar.add(addButton(OptionBar.BUG_ICON, OptionBar.BUG_ICON,
-                                     OptionBar.BUG_ICON, OptionBar.BUG_ICON,
+    this.tinyToolbar.add(addButton(OptionBar.HELP_ICON, OptionBar.ACTION_HELP,
+                                   OptionBar.DESCRIP_HELP, OptionBar.HELP_SELECTED_ICON,
+                                   OptionBar.HELP_ICON));
+    this.tinyToolbar.add(Box.createHorizontalStrut(space2));
+    this.tinyToolbar.add(addButton(OptionBar.BUG_ICON, OptionBar.ACTION_BUG,
+                                     OptionBar.DESCRIP_BUG, OptionBar.BUG_SELECTED_ICON,
                                      OptionBar.BUG_ICON));
-    this.descriptionToolbar.add(Box.createVerticalStrut(space1));
-    this.tinyToolbar.add(addButton(OptionBar.BUG_ICON, OptionBar.BUG_ICON,
-                                     OptionBar.BUG_ICON, OptionBar.BUG_ICON,
-                                     OptionBar.BUG_ICON));
+    this.tinyToolbar.add(Box.createHorizontalStrut(space2));
+    this.tinyToolbar.add(addButton(OptionBar.SITE_ICON, OptionBar.ACTION_SITE,
+                                   OptionBar.DESCRIP_SITE, OptionBar.SITE_SELECTED_ICON,
+                                   OptionBar.SITE_ICON));
     this.tinyToolbar.add(Box.createVerticalGlue());
   }
 

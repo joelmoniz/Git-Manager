@@ -30,6 +30,10 @@ public class OptionBar {
 
   public static final String BUG_ICON = NOVICE_TOOL_ICON_PATH
       + "bug.png";
+  public static final String HELP_ICON = NOVICE_TOOL_ICON_PATH
+      + "help_window.png";
+  public static final String SITE_ICON = NOVICE_TOOL_ICON_PATH
+      + "globe.png";
 	
 
 	public static final String GIT_INIT_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
@@ -52,6 +56,13 @@ public static final String GIT_STATUS_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	+ "gitstatus_selected.png";
 public static final String GIT_SNAP_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
 	+ "snapshot_selected.png";
+
+public static final String BUG_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
++ "bug_selected.png";
+public static final String HELP_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
++ "help_window_selected.png";
+public static final String SITE_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
++ "globe_selected.png";
 
 
 public static final String GIT_INIT_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
@@ -96,6 +107,10 @@ public static final String GIT_SNAP_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
 	public static final String ACTION_STATUS = "GIT_STATUS";
 	public static final String ACTION_SNAP = "GIT_SNAP";
 
+public static final String ACTION_BUG = "BUG";
+public static final String ACTION_HELP = "HELP";
+public static final String ACTION_SITE = "SITE";
+
 	public static final String DESCRIP_INIT =   "Create Repo";
 	public static final String DESCRIP_ADD =    "Stage Files";
 	public static final String DESCRIP_DIFF =   "Show Changes";
@@ -106,6 +121,10 @@ public static final String GIT_SNAP_DISABLED_ICON = NOVICE_TOOL_ICON_PATH
   public static final String DESCRIP_LOG =      "Show Commits so far";
 	public static final String DESCRIP_STATUS = "Show Working Tree Status";
 	public static final String DESCRIP_SNAP =   "Save Working Tree State";
+
+public static final String DESCRIP_BUG = "Report a Bug";
+public static final String DESCRIP_HELP = "Help";
+public static final String DESCRIP_SITE = "Git Manager's Website";
 	
 	public static final String MODE_MENU_ARROW = TOOL_ICON_PATH
 			+ "mode-arrow.png"; 
