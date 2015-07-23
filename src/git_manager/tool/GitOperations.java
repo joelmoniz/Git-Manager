@@ -1,5 +1,7 @@
 package git_manager.tool;
 
+import git_manager.utils.HintTextField;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.ByteArrayOutputStream;
@@ -352,6 +354,12 @@ public class GitOperations {
 			uName = pass = remote = null;
 			return;
 		}
+		
+		if (!remote.endsWith(".git")) {
+		  remote = remote + ".git";
+		}
+		
+		storeRemote();
 
 		// Get TransportException when project is >1Mb
 		// TODO: Fix this:
@@ -382,11 +390,39 @@ public class GitOperations {
 		}
 
 	}
+	
+  void storeRemote() {
+    StoredConfig cofig = git.getRepository().getConfig();
+    String configRemote = cofig.getString("remote", "origin", "url");
+//	    String configUname = cofig.getString("remote", "origin", "url");
+
+    if (configRemote == null || !configRemote.equals(remote)) {
+      cofig.setString("remote", "origin", "url", remote);
+      cofig.setString("remote", "origin", "fetch", "+refs/heads/*:refs/remotes/origin/*");
+      try {
+        cofig.save();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+  
+  void storeMergeBranch() {
+    StoredConfig cofig = git.getRepository().getConfig();
+
+    cofig.setString("branch", "master", "remote", "origin");
+    cofig.setString("branch", "master", "merge", "refs/heads/master");
+    try {
+      cofig.save();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
 	void getUnameandPass() {
 		JTextField uName = new JTextField(15);
 		JPasswordField pass = new JPasswordField(15);
-		JTextField remote = new JTextField(15);
+		HintTextField remote = new HintTextField("https://github.com/uname/repo.git");
 
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 		JPanel un = new JPanel();
@@ -398,12 +434,19 @@ public class GitOperations {
 		un2.add(new JLabel("Password:   "));
 		un2.add(pass);
 		panel.add(un2);
-		un3.add(new JLabel("GitHub repo:"));
+		un3.add(new JLabel("Repo:"));
 		un3.add(remote);
 		panel.add(un3);
+		
+		StoredConfig cofig = git.getRepository().getConfig();
+		String remt = cofig.getString("remote", "origin", "url");
+		
+		if (remt != null && !remt.isEmpty()) {
+		  remote.setText(remt);
+		}
 
 		int result = JOptionPane.showConfirmDialog(null, panel,
-				"Login to GitHub", JOptionPane.OK_CANCEL_OPTION,
+				"Login Credentials", JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.PLAIN_MESSAGE);
 		if (result == JOptionPane.OK_OPTION) {
 			this.uName = uName.getText();
@@ -412,7 +455,35 @@ public class GitOperations {
 		}
 	}
 	
+	 void getRemote() {
+	     HintTextField remote = new HintTextField("https://github.com/uname/repo.git");
+
+	    JPanel panel = new JPanel(new GridLayout(0, 1));
+	    JPanel un3 = new JPanel();
+	    un3.add(new JLabel("Repo:"));
+	    un3.add(remote);
+	    panel.add(un3);
+	    
+	    StoredConfig cofig = git.getRepository().getConfig();
+	    String remt = cofig.getString("remote", "origin", "url");
+	    
+	    if (remt != null && !remt.isEmpty()) {
+	      remote.setText(remt);
+	      remote.disableHint();
+	    }
+
+	    int result = JOptionPane.showConfirmDialog(null, panel,
+	        "Remote address", JOptionPane.OK_CANCEL_OPTION,
+	        JOptionPane.PLAIN_MESSAGE);
+	    if (result == JOptionPane.OK_OPTION) {
+	      this.remote = remote.getText();
+	    }
+	  }
+	
 	 public void pullFromRemote() {
+	   getRemote();
+	   storeRemote();
+	   storeMergeBranch();
 	    PullResult result;
 	    try {
 	      result = git.pull().call();

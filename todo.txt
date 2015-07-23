@@ -6,6 +6,11 @@ UI related
 	[ ] Why it is greyed out when disabled
 [ ] Make the description of disabled button light grey instad of white
 [ ] Make the tool theme based on processing color scheme
+[ ] In git push, fix the too long JTextField that sets the repo
+
+Bugs
+====
+[ ] Make Git Manager update the repo it looks at when operations like "Save As" are done
 
 Adding functionality
 ====================
