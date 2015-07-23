@@ -42,7 +42,20 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 
   private static final long serialVersionUID = 6679503189108207242L;
 
+  /**
+   * used to debug the positioning of stuff by adding in borders 
+   */
+  private static final boolean DEBUG_BORDER = false;
+  
+  /**
+   * Used to add in the horizontal structs between each of the option buttons
+   */
 	private static final int space1 = 5;
+	
+	/**
+	 * Used to add in tiny vertical structs between each of the tiny buttons
+	 */
+	private static final int space2 = 2;
 	// Expertise Selection Menu variables
 	private int elmX2, elmX1, elmY1, elmY2, elmTextWidth, elmTextAscent;
 	// ArrayList<PointCoordinates> points;
@@ -55,10 +68,11 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 	private Editor editor;
 	private JPanel buttonToolbar;
   private JPanel descriptionToolbar;
+  private JPanel tinyToolbar;
 
 	public GitOptionToolbar(Editor e) {
 		this.setName("ActionBar");
-		this.setLayout(new BorderLayout());
+		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 //		this.setBounds(0, 0, 400, 145);
 		this.setVisible(true);
 //		this.setFloatable(false);
@@ -72,24 +86,57 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 //			buttonDescription.setForeground(Color.BLACK);
 //		else
 			buttonDescription.setForeground(Color.WHITE);
+			
+		if (DEBUG_BORDER) {
+		  buttonDescription.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE));
+		}
 		// points = new ArrayList<PointCoordinates>();
 		buttons = new ArrayList<JButton>();
 
 		buttonToolbar = new JPanel();
 		descriptionToolbar = new JPanel();
+		tinyToolbar = new JPanel();
 
 		editor = e;
 
 		gitops = new GitOperations(editor);
 
 		buttonToolbar.setLayout(new BoxLayout(buttonToolbar, BoxLayout.LINE_AXIS));
-		buttonToolbar.setBorder(new EmptyBorder(10,0,0,0));
+		buttonToolbar.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
 		descriptionToolbar.setLayout(new BoxLayout(descriptionToolbar, BoxLayout.LINE_AXIS));
+    tinyToolbar.setLayout(new BoxLayout(tinyToolbar, BoxLayout.PAGE_AXIS));
+    tinyToolbar.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
+
 		populateButtonBar();
 		populateDescribeBar();
+		populateTinyBar();
 		
-		this.add(buttonToolbar, BorderLayout.PAGE_START);
-		this.add(descriptionToolbar, BorderLayout.CENTER);//, JToolBar.LEFT_ALIGNMENT);
+		JPanel pna = new JPanel();
+		pna.setLayout(new BoxLayout(pna, BoxLayout.PAGE_AXIS));
+		pna.add(buttonToolbar);
+//		pna.add(Box.createHorizontalGlue());
+		pna.add(descriptionToolbar);
+		
+    if (DEBUG_BORDER) {
+      buttonToolbar
+          .setBorder(BorderFactory.createCompoundBorder(BorderFactory
+              .createMatteBorder(1, 1, 1, 1, Color.CYAN), buttonToolbar
+              .getBorder()));
+      tinyToolbar.setBorder(BorderFactory.createCompoundBorder(BorderFactory
+          .createMatteBorder(1, 1, 1, 1, Color.PINK), tinyToolbar.getBorder()));
+      descriptionToolbar.setBorder(BorderFactory
+          .createMatteBorder(1, 1, 1, 1, Color.YELLOW));
+      pna.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.GREEN));
+    }
+		
+//		this.add(pna, BorderLayout.PAGE_START);
+////		this.add(buttonToolbar, BorderLayout.PAGE_START);
+////		this.add(tinyToolbar, BorderLayout.LINE_END);
+//		this.add(descriptionToolbar, BorderLayout.CENTER);
+		
+		this.add(pna);
+//		this.add(Box.createHorizontalGlue());
+		this.add(tinyToolbar);
 		
 //		buttonToolbar.setPreferredSize(this.getPreferredSize());
 		buttonToolbar.setBackground(Color.BLACK);
@@ -99,6 +146,12 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		descriptionToolbar.setBackground(Color.BLACK);
 		descriptionToolbar.setOpaque(true);
 //		descriptionToolbar.setFloatable(false);
+		
+		tinyToolbar.setBackground(Color.BLACK);
+		tinyToolbar.setOpaque(true);  
+		
+    pna.setBackground(Color.BLACK);
+    pna.setOpaque(true);
 		
 		disableButtons();
 		
@@ -115,7 +168,7 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 		this.buttonToolbar.add(addButton(OptionBar.GIT_INIT_ICON, OptionBar.ACTION_INIT,
 				OptionBar.DESCRIP_INIT, OptionBar.GIT_INIT_SELECTED_ICON,
-				OptionBar.GIT_INIT_DISABLED_ICON));
+				OptionBar.GIT_INIT_ICON));
 		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 		this.buttonToolbar.add(addButton(OptionBar.GIT_SNAP_ICON, OptionBar.ACTION_SNAP,
 				OptionBar.DESCRIP_SNAP, OptionBar.GIT_SNAP_SELECTED_ICON,
@@ -151,9 +204,9 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 		this.buttonToolbar.add(buttonDescription);
+    this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 
-		this.buttonToolbar.add(Box.createHorizontalGlue());
-
+    this.buttonToolbar.add(Box.createHorizontalGlue());
 	}
   
   private void populateDescribeBar() {
@@ -181,6 +234,17 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
      this.descriptionToolbar.add(Box.createHorizontalGlue());
 
    }
+  
+  private void populateTinyBar() {
+    this.tinyToolbar.add(addButton(OptionBar.BUG_ICON, OptionBar.BUG_ICON,
+                                     OptionBar.BUG_ICON, OptionBar.BUG_ICON,
+                                     OptionBar.BUG_ICON));
+    this.descriptionToolbar.add(Box.createVerticalStrut(space1));
+    this.tinyToolbar.add(addButton(OptionBar.BUG_ICON, OptionBar.BUG_ICON,
+                                     OptionBar.BUG_ICON, OptionBar.BUG_ICON,
+                                     OptionBar.BUG_ICON));
+    this.tinyToolbar.add(Box.createVerticalGlue());
+  }
 
 	private JButton addButton(String imageLocation, String actionCommand,
 			String buttonName, String rolloverImageLocation, 
@@ -231,6 +295,10 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		b.addMouseListener(this);
 		b.addMouseMotionListener(this);
 
+		if (DEBUG_BORDER) {
+		  b.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.WHITE), b.getBorder()));
+		}
+		
 		buttons.add(b);
 
 		return b;

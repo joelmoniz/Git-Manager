@@ -27,6 +27,9 @@ public class OptionBar {
 			+ "gitstatus.png";
 	public static final String GIT_SNAP_ICON = NOVICE_TOOL_ICON_PATH
 			+ "snapshot.png";
+
+  public static final String BUG_ICON = NOVICE_TOOL_ICON_PATH
+      + "bug.png";
 	
 
 	public static final String GIT_INIT_SELECTED_ICON = NOVICE_TOOL_ICON_PATH
