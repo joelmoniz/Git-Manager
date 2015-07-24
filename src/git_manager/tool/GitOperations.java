@@ -455,7 +455,7 @@ public class GitOperations {
 		}
 	}
 	
-	 void getRemote() {
+	 boolean getRemote() {
 	     HintTextField remote = new HintTextField("https://github.com/uname/repo.git");
 
 	    JPanel panel = new JPanel(new GridLayout(0, 1));
@@ -478,10 +478,14 @@ public class GitOperations {
 	    if (result == JOptionPane.OK_OPTION) {
 	      this.remote = remote.getText();
 	    }
+	    return (result == JOptionPane.OK_OPTION);
 	  }
 	
 	 public void pullFromRemote() {
-	   getRemote();
+	   if (!getRemote()) {
+	     System.out.println("Pull cancelled.");
+	     return;
+	   }
 	   storeRemote();
 	   storeMergeBranch();
 	    PullResult result;

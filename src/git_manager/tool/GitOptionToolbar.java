@@ -680,6 +680,8 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		else if (a.equals(OptionBar.ACTION_PULL))
 		 {
        System.out.println("Pulling...");
+       ((JButton)e.getSource()).getModel().setRollover(false);
+       buttonDescription.setText("");
         // TODO: Design a button different from the current pull and the
         // pull that displays on mouseover which remains until the pull
         // action is complete, and then changes back to original pull
