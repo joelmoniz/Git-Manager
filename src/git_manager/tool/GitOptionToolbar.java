@@ -204,7 +204,7 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 		this.buttonToolbar.add(addButton(OptionBar.GIT_INIT_ICON, OptionBar.ACTION_INIT,
 				OptionBar.DESCRIP_INIT, OptionBar.GIT_INIT_SELECTED_ICON,
-				OptionBar.GIT_INIT_DISABLED_ICON));
+				OptionBar.GIT_INIT_ICON));
 		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 		this.buttonToolbar.add(addButton(OptionBar.GIT_SNAP_ICON, OptionBar.ACTION_SNAP,
 				OptionBar.DESCRIP_SNAP, OptionBar.GIT_SNAP_SELECTED_ICON,
@@ -245,12 +245,13 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
     this.buttonToolbar.add(Box.createHorizontalGlue());
 	}
   
+	// TODO: Add all this in into OptionBar class 
   private void populateDescribeBar() {
 
      this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
      this.descriptionToolbar.add(addLabel("Start", 41, 0));
      this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
-     this.descriptionToolbar.add(addLabel("Save", 41, 0));
+     this.descriptionToolbar.add(addLabel("Commit", 41, 0));
      this.descriptionToolbar.add(Box.createHorizontalStrut(space1));
      // TODO: Uncomment this to add in a git diff
 //     this.add(addButton(OptionBar.GIT_DIFF_ICON, OptionBar.ACTION_DIFF,
