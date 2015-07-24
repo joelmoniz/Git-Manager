@@ -124,7 +124,7 @@ public static final String ACTION_SITE = "SITE";
 
 public static final String DESCRIP_BUG = "Report a Bug";
 public static final String DESCRIP_HELP = "Help";
-public static final String DESCRIP_SITE = "Git Manager's Website";
+public static final String DESCRIP_SITE = "Git Manager Website";
 	
 	public static final String MODE_MENU_ARROW = TOOL_ICON_PATH
 			+ "mode-arrow.png"; 
@@ -140,4 +140,11 @@ public static final String DESCRIP_SITE = "Git Manager's Website";
 
 	public static final int MODE_GAP_WIDTH = 8;
 	public static final int MODE_BOX_HEIGHT = 6;
+	
+
+  public static final String HELP_SCREEN = TOOL_ICON_PATH
+      + "help_screen.png"; 
+  
+  public static final String URL_BUG = "https://github.com/joelmoniz/Git-Manager/issues/new";
+  public static final String URL_GIT_MANAGER = "http://joelmoniz.com/git-manager/";
 }

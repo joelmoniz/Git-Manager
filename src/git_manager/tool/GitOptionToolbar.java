@@ -21,6 +21,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -29,6 +30,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
@@ -36,6 +38,7 @@ import javax.swing.event.MouseInputListener;
 
 import processing.app.Base;
 import processing.app.ui.Editor;
+import processing.app.ui.Toolkit;
 
 public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		ActionListener {
@@ -179,7 +182,7 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 		this.buttonToolbar.add(addButton(OptionBar.GIT_INIT_ICON, OptionBar.ACTION_INIT,
 				OptionBar.DESCRIP_INIT, OptionBar.GIT_INIT_SELECTED_ICON,
-				OptionBar.GIT_INIT_ICON));
+				OptionBar.GIT_INIT_DISABLED_ICON));
 		this.buttonToolbar.add(Box.createHorizontalStrut(space1));
 		this.buttonToolbar.add(addButton(OptionBar.GIT_SNAP_ICON, OptionBar.ACTION_SNAP,
 				OptionBar.DESCRIP_SNAP, OptionBar.GIT_SNAP_SELECTED_ICON,
@@ -263,7 +266,7 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
     this.tinyToolbar.add(Box.createVerticalGlue());
   }
 
-	private JButton addButton(String imageLocation, String actionCommand,
+	protected JButton addButton(String imageLocation, String actionCommand,
 			String buttonName, String rolloverImageLocation, 
 			String disabledImageLocation) {
 		JButton b = new JButton();
@@ -321,7 +324,7 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		return b;
 	}
 	
-	private JLabel addLabel(String content, int buttonWidth, int separatorCount) {
+	protected JLabel addLabel(String content, int buttonWidth, int separatorCount) {
 	  JLabel label = new JLabel(content, SwingConstants.CENTER);
 //	  label.setAlignmentX(Component.BOTTOM_ALIGNMENT);
 //	  label.setAlignmentY(Component.);
@@ -330,6 +333,26 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 	  label.setPreferredSize(new Dimension(buttonWidth + separatorCount*space1, 
 	                                       label.getHeight()));
 	  return label;
+	}
+	
+	protected void showHelpMenu(final String imageLocation) {
+	  SwingUtilities.invokeLater(new Runnable() {
+      
+      @Override
+      public void run() {
+        JFrame f = new JFrame("Git Manager Help");
+        JPanel p = new JPanel();
+        
+        // TODO: Should a BufferedImage be used instead?
+        ImageIcon icon = new ImageIcon(this.getClass().getResource(imageLocation));
+        JLabel imLabel = new JLabel(icon);
+        p.add(imLabel);
+        f.add(p);
+        Toolkit.setIcon(f);
+        f.pack();
+        f.setVisible(true);
+      }
+    });
 	}
 
 	@Override
@@ -673,6 +696,15 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
           // }
         };
         worker.execute();
+    }
+		else if (a.equals(OptionBar.ACTION_HELP)) {
+		  showHelpMenu(OptionBar.HELP_SCREEN);
+		}
+		else if (a.equals(OptionBar.ACTION_BUG)) {
+		  Base.openURL(OptionBar.URL_BUG);
+		}
+    else if (a.equals(OptionBar.ACTION_SITE)) {
+      Base.openURL(OptionBar.URL_GIT_MANAGER);
     }
 		disableButtons();
 
