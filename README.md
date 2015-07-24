@@ -1,38 +1,33 @@
-#<div align="center"> <u>Git Manager </div></u>
+# <div align="center"> <u>Git Manager </div></u>
 
->##Objective  
+## Objective  
   
->The Git Manager is a tool to act as a complete and convenient interface between GitHub and Processing, and to integrate the awesomeness of version control with Processing. It is meant to be able to provide not only all the offline features of Git, but also the power of collaboration and numerous other features that GitHub brings to the table. Though the tool is primarily meant to enable the user to use all of GitHub’s features via the tool,  the user will be provided the flexibility to use the tool for Git operations alone, if he/she so chooses (for example, add, commit, branch, etc.). The tool's webpage maybe viewed [**here**](http://joelmoniz.com/git-manager/).
+The Git Manager is a tool to act as a complete and convenient interface between GitHub and Processing, and to integrate the awesomeness of version control with Processing. It is meant to be able to provide not only all the offline features of Git, but also the power of collaboration and numerous other features that GitHub brings to the table. Though the tool is primarily meant to enable the user to use all of GitHub’s features via the tool,  the user will be provided the flexibility to use the tool for Git operations alone, if he/she so chooses (for example, add, commit, branch, etc.). The tool's webpage maybe viewed [**here**](http://joelmoniz.com/git-manager/).
 
->##Installation Instructions
->To use Git Manager from within the Processing IDE (like a normal tool), do the following:
->
+## Installation Instructions
+To use Git Manager from within the Processing IDE (like a normal tool), do the following:
+
 * Create a folder named "tools" inside your Sketchbook folder (if not already present). The location of the sketchbook folder is shown in Processing's Preferences dialog.
 * Extract GitManager.zip present in "distribution/GitManager-1/download" into the "tools" folder. Ensure that in the tools folder, GitManager folder has src, tools, etc. within it, and not another sub-folder named GitManager.  
 * Restart Processing  
 
->##Instructions to Build Git Manager
->To compile Git Manager, do the following:
->
+## Instructions to Build Git Manager
+To compile Git Manager, do the following:
+
 1. Clone Git Manager into a location of your choice:  
+Change the directory to where you would like to clone Git Manager to, and the run the  following command in the Git Bash Terminal:   
+`git clone https://github.com/joelmoniz/Git-Manager.git`  
+Note: If you would like to contribute to the Git Manager, you'll have to fork it instead.  
+2. Import the cloned project into Eclipse
+3. Open the build.properties file in the resources folder, and change the property "sketchbook.location" to wherever your Processing sketchbook is located, as instructed in the file
+4. Now, to show the Ant View, go to Window > Show View > Ant
+5. Drag the resources/build.xml file onto the Ant view there
+6. Press the 'Play' button, and voilà!
 
->>Change the directory to where you would like to clone Git Manager to, and the run the following command in the Git Bash Terminal:  
-  
->>>git clone https://github.com/joelmoniz/Git-Manager.git  
-  
->>Note: If you would like to contribute to the Git Manager, you'll have to fork it instead
-
-><ol start='2'><li> Import the cloned project into Eclipse</li>   &nbsp;
-><li>Open the build.properties file in the resources folder, and change the property "sketchbook.location" to wherever your Processing sketchbook is located, as instructed in the file.</li>
-&nbsp;
-><li>Now, to show the Ant View, go to Window > Show View > Ant</li> &nbsp;
-><li>Drag the resources/build.xml file onto the Ant view there.</li>&nbsp;
-><li>Press the 'Play' button, and voilà!</li>
-</ol>  
-  
+<!--  
 >##Sources  
   
->The following is a list of sources that are being (or have been) used while creating this tool. Though the tool is not complete, this lost will keep building up as the tool progresses so that I don't miss a source out:  
+>The following is a list of sources that are being (or have been) used while creating this tool. Though the tool is not complete, this list will keep building up as the tool progresses so that I don't miss a source out:  
 >
 * [Processing Source Code](https://github.com/processing/processing)  
 >Since I wanted the look and feel of Git Manager to be similar to Processing, a significant part of especially the Expertise Level Menu have been done with Processing's source-code used as a reference.
@@ -40,6 +35,9 @@
 >For every time I get stuck... If I listed down the number of times I've (already) opened this web-site when creating this tool, I'd probably spend a good half-an-hour counting :p  
 * [Online Java Documentation](http://docs.oracle.com/javase/tutorial/uiswing/)  
 >For every single time that I forget a complicated syntax :)
+-->
+
+
 
 <!---
 The following describes how to set up a Processing tool project in Eclipse and build it successfully, and to make your tool ready for distribution.
