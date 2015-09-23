@@ -2,14 +2,22 @@
 
 ## Objective  
   
-The Git Manager is a tool to act as a complete and convenient interface between GitHub and Processing, and to integrate the awesomeness of version control with Processing. It is meant to be able to provide not only all the offline features of Git, but also the power of collaboration and numerous other features that GitHub brings to the table. Though the tool is primarily meant to enable the user to use all of GitHub�s features via the tool,  the user will be provided the flexibility to use the tool for Git operations alone, if he/she so chooses (for example, add, commit, branch, etc.). The tool's webpage maybe viewed [**here**](http://joelmoniz.com/git-manager/).
+The Git Manager is a tool to act as a complete and convenient interface between GitHub and Processing, and to integrate the awesomeness of version control with Processing. It is meant to be able to provide not only all the offline features of Git, but also the power of collaboration and numerous other features that GitHub brings to the table. Though the tool is primarily meant to enable the user to use all of GitHub’s features via the tool,  the user will be provided the flexibility to use the tool for Git operations alone, if he/she so chooses (for example, add, commit, branch, etc.). The tool's webpage maybe viewed [**here**](http://joelmoniz.com/git-manager/).
 
 ## Installation Instructions
+
+### The Easy Way: Installating the Git Manager via the Contribution Manager
+The easiest way to install the Git Manager is from within the PDE's Tools Manager:
+
+* Go to `Tools > Add Tool...`
+* Click on `Git Manager`, and click on the `Install` button in the bottom pane
+
+### The Hard Way: Manually Installating the Git Manager
 To use Git Manager from within the Processing IDE (like a normal tool), do the following:
 
 * Create a folder named "tools" inside your Sketchbook folder (if not already present). The location of the sketchbook folder is shown in Processing's Preferences dialog.
-* Extract GitManager.zip present in "distribution/GitManager-1/download" into the "tools" folder. Ensure that in the tools folder, GitManager folder has src, tools, etc. within it, and not another sub-folder named GitManager.  
-* Restart Processing  
+* Download the latest release ([GitManager.zip](https://github.com/joelmoniz/Git-Manager/releases/tag/latest)) and extract it into the "tools" folder. Ensure that in the tools folder, GitManager folder has src, tools, etc. within it, and not another sub-folder named GitManager.  
+* Start Processing  
 
 ## Instructions to Build Git Manager
 To compile Git Manager, do the following:
@@ -22,7 +30,7 @@ Note: If you would like to contribute to the Git Manager, you'll have to fork it
 3. Open the build.properties file in the resources folder, and change the property "sketchbook.location" to wherever your Processing sketchbook is located, as instructed in the file
 4. Now, to show the Ant View, go to Window > Show View > Ant
 5. Drag the resources/build.xml file onto the Ant view there
-6. Press the 'Play' button, and voil�!
+6. Press the 'Play' button, and voilà!
 
 <!--  
 >##Sources  
@@ -55,8 +63,8 @@ There are two options to import the template project into Eclipse: using a Git [
   * Change the repository name to the name of your tool and save your changes.
   * NOTE: GitHub only allows you to fork a project once. If you need to create multiple forks, you can follow these [instructions](http://adrianshort.org/2011/11/08/create-multiple-forks-of-a-github-repo/).
 1. Clone your new repository to your Eclipse workspace.
-  * Open Eclipse and select the File → Import... menu item.
-  * Select Git → Projects from Git, and click "Next >".
+  * Open Eclipse and select the File â†’ Import... menu item.
+  * Select Git â†’ Projects from Git, and click "Next >".
   * Select "URI" and click "Next >". 
   * Enter your repository's clone URL in the "URI" field. The remaining fields in the "Location" and "Connection" groups will get automatically filled in.
   * Enter your GitHub credentials in the "Authentication" group, and click "Next >".
@@ -65,19 +73,19 @@ There are two options to import the template project into Eclipse: using a Git [
   * Make sure "Import existing projects" is selected, and click "Next >".
   * Eclipse should find and select the `processing-tool-template` automatically, click "Finish".
 1. Rename your Eclipse project.
-  * In the Package Explorer, right-click (ctrl-click) on the folder icon of the `processing-tool-template` project, and select Refactor → Rename... from the menu that pops up. 
+  * In the Package Explorer, right-click (ctrl-click) on the folder icon of the `processing-tool-template` project, and select Refactor â†’ Rename... from the menu that pops up. 
   * Give the project the name of your tool, and click "OK".
   
 ### Option B: Downloaded Package
 
 1. Download the latest Eclipse template from [here](https://github.com/processing/processing-tool-template/releases). **Don't unzip the ZIP file yet.**
 1. Create a new Java project in Eclipse. 
-  * From the menubar choose File → New → Java Project. 
+  * From the menubar choose File â†’ New â†’ Java Project. 
   * Give the project the name of your tool.
   * Click "Finish".
 1. Import the template source files.
   * Right-click (ctrl-click) onto the folder icon of your newly created project in the Package Explorer and select "Import..."`" from the menu that pops up. 
-  * Select General → Archive File, and click "Next >".
+  * Select General â†’ Archive File, and click "Next >".
   * Navigate to the ZIP file you downloaded earlier in step 1, and click "Finish".
   
 ## Set Up and Compile
@@ -92,7 +100,7 @@ There are two options to import the template project into Eclipse: using a Git [
   * Edit the properties file, making changes to items 1-4 so that the values and paths are properly set for your project to compile. A path can be relative or absolute.
   * Make changes to items under 5. These are metadata used in the automatically generated HTML, README, and properties documents.
 1. Compile your tool using Ant.
-  * From the menu bar, choose Window → Show View → Ant. A tab with the title "Ant" will pop up on the right side of your Eclipse editor. 
+  * From the menu bar, choose Window â†’ Show View â†’ Ant. A tab with the title "Ant" will pop up on the right side of your Eclipse editor. 
   * Drag the `resources/build.xml` file in there, and a new item "ProcessingTools" will appear. 
   * Press the "Play" button inside the "Ant" tab.
 1. BUILD SUCCESSFUL. The tool template will start to compile, control messages will appear in the console window, warnings can be ignored. When finished it should say BUILD SUCCESSFUL. Congratulations, you are set and you can start writing your own tool by making changes to the source code in folder `src`.
@@ -110,9 +118,9 @@ If you want to share your tool's source code (and we know you do), we recommend 
 
 ## <a name='AddingJARs'/>Adding pde.jar and other .jar files to your classpath
 
-The `pde.jar` file contains classes responsible for creating the Processing Development Environment itself. It must be part of your classpath when building a tool. The `core.jar` file does not necessarily need to be added to your classpath, however, you will need to include it if you plan on creating any external tool windows based on `PApplet`. On Windows and Linux, these files are located in the Processing distribution folder inside a folder named "lib". On Mac OS X, right-click `Processing.app` and use `Show Package Contents` to see the guts. The `lib` folder is at `Contents` → `Resources` → `Java` → `lib`. For further information about the classes in `pde.jar`, you can see the source [here](http://code.google.com/p/processing/source/browse/trunk/processing#processing/app) and the developer documentation [here](http://processing.googlecode.com/svn/trunk/processing/build/javadoc/everything/index.html).
+The `pde.jar` file contains classes responsible for creating the Processing Development Environment itself. It must be part of your classpath when building a tool. The `core.jar` file does not necessarily need to be added to your classpath, however, you will need to include it if you plan on creating any external tool windows based on `PApplet`. On Windows and Linux, these files are located in the Processing distribution folder inside a folder named "lib". On Mac OS X, right-click `Processing.app` and use `Show Package Contents` to see the guts. The `lib` folder is at `Contents` â†’ `Resources` â†’ `Java` â†’ `lib`. For further information about the classes in `pde.jar`, you can see the source [here](http://code.google.com/p/processing/source/browse/trunk/processing#processing/app) and the developer documentation [here](http://processing.googlecode.com/svn/trunk/processing/build/javadoc/everything/index.html).
 
-If you created a `libs` folder as described above, put the libraries you need to add to your classpath in there. In the `Properties` of your Java project, navigate to `Java Build Path` → `Libraries`, and click `Add External JARs`. Select the `.jar` files from the `libs` folder that are required for compiling you project. Adjust the `build.properties` file accordingly.
+If you created a `libs` folder as described above, put the libraries you need to add to your classpath in there. In the `Properties` of your Java project, navigate to `Java Build Path` â†’ `Libraries`, and click `Add External JARs`. Select the `.jar` files from the `libs` folder that are required for compiling you project. Adjust the `build.properties` file accordingly.
 
 The `libs` folder is recommended but not a requirement, nevertheless you need to specify where your `jar` files are located in your system in order to add them to the classpath.
 
