@@ -39,6 +39,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import processing.app.Base;
+import processing.app.Platform;
 import processing.app.ui.Editor;
 import processing.app.ui.Toolkit;
 
@@ -173,7 +174,7 @@ public class GitGUIFrame extends JFrame implements ActionListener {
 			}
 		});
 		if (mode == 2) {
-      if (Base.isLinux()) {
+      if (Platform.isLinux()) {
         setMinimumSize(new Dimension(700, 530));
         setPreferredSize(new Dimension(700, 530));
       } else {

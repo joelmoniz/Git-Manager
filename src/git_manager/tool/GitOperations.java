@@ -83,7 +83,7 @@ import org.eclipse.jgit.transport.PushResult;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 
-import processing.app.Base;
+import processing.app.Messages;
 import processing.app.ui.Editor;
 
 public class GitOperations {
@@ -591,9 +591,9 @@ public class GitOperations {
       // having editor as the parent is far more convenient, since I observe that I generally 
       // tend to keep tool window at the corner and the processing IDE in the centre, 
       // and prefer the dialog box displaying at the center... I think...
-      int x = Base.showYesNoQuestion(editor, "Reset sketch to previous commit?", "Are you sure you want to reset the entire skecthbook to<br>the exact state it was in the previous commit?", "All changes made since then will be permanently lost.");
+      int x = Messages.showYesNoQuestion(editor, "Reset sketch to previous commit?", "Are you sure you want to reset the entire skecthbook to<br>the exact state it was in the previous commit?", "All changes made since then will be permanently lost.");
       if (x == JOptionPane.YES_OPTION) {
-        x = Base.showYesNoQuestion(editor,   "Really reset sketch to previous commit?", "Are you absolutely, positively sure you want to reset the entire<br>skecthbook to the exact state it was in the previous commit?", "All changes made since then will be permanently lost, and even<br>git can't recover them.");
+        x = Messages.showYesNoQuestion(editor,   "Really reset sketch to previous commit?", "Are you absolutely, positively sure you want to reset the entire<br>skecthbook to the exact state it was in the previous commit?", "All changes made since then will be permanently lost, and even<br>git can't recover them.");
         if (x == JOptionPane.YES_OPTION) {
           reset.call();
           System.out.println("Hard reset completed. Sketch is now exactly like the last snapshot/commit.");

@@ -26,6 +26,7 @@ import git_manager.constants.ProjectDetails;
 
 import java.awt.EventQueue;
 
+import processing.app.Base;
 import processing.app.tools.Tool;
 import processing.app.ui.Editor;
 
@@ -38,9 +39,9 @@ public class GitManager implements Tool {
 		return "Git Manager";
 	}
 
-	public void init(Editor theEditor) {
-		editor = theEditor;
-	}
+//	public void init(Editor theEditor) {
+//		editor = theEditor;
+//	}
 
 	public void run() {
 		try {
@@ -78,5 +79,17 @@ public class GitManager implements Tool {
 			eOuter.printStackTrace();
 		}
 	}
+
+	// TODO: Use base instead of Editor, to keep track of active Editor
+//  @Override
+  public void init(Base base) {
+    editor = base.getActiveEditor();    
+  }
+  
+  // HACK: This is kept in to keep things compatible with
+  // processing 3.0 b 4-6
+  public void init(Editor editor) {
+    this.editor = editor;    
+  }
 
 }

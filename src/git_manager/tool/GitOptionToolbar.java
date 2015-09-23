@@ -24,15 +24,10 @@ package git_manager.tool;
 
 import git_manager.constants.OptionBar;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -50,15 +45,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.MouseInputListener;
 
 import processing.app.Base;
+import processing.app.Platform;
 import processing.app.ui.Editor;
 import processing.app.ui.Toolkit;
 
@@ -404,7 +398,7 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 
 	void renderExpertiseLevelMenu(Graphics g) {
 
-		if (Base.isLinux()) {
+		if (Platform.isLinux()) {
 			g.setColor(new Color(0, 0, 0));
 			g.drawImage(
 					new ImageIcon((this.getClass()
@@ -436,13 +430,13 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 	}
 
 	void renderRepoSelectionMenu(Graphics g) {
-		if (Base.isLinux())
+		if (Platform.isLinux())
 			g.setColor(new Color(0, 0, 0));
 		else
 			g.setColor(new Color(255, 255, 255));
 
 		g.drawRect(rsmX1, rsmY1, rsmX2 - rsmX1, rsmY2 - rsmY1 - 1);
-		if (Base.isLinux())
+		if (Platform.isLinux())
 			g.drawImage(
 					new ImageIcon((this.getClass()
 							.getResource(OptionBar.MODE_MENU_ARROW_LINUX)))
@@ -726,10 +720,10 @@ public class GitOptionToolbar extends JPanel implements MouseInputListener,
 		  showHelpMenu(OptionBar.HELP_SCREEN);
 		}
 		else if (a.equals(OptionBar.ACTION_BUG)) {
-		  Base.openURL(OptionBar.URL_BUG);
+		  Platform.openURL(OptionBar.URL_BUG);
 		}
     else if (a.equals(OptionBar.ACTION_SITE)) {
-      Base.openURL(OptionBar.URL_GIT_MANAGER);
+      Platform.openURL(OptionBar.URL_GIT_MANAGER);
     }
 		disableButtons();
 
