@@ -3,6 +3,9 @@
 ## Objective  
   
 The Git Manager is a tool to act as a complete and convenient interface between GitHub and Processing, and to integrate the awesomeness of version control with Processing. It is meant to be able to provide not only all the offline features of Git, but also the power of collaboration and numerous other features that GitHub brings to the table. Though the tool is primarily meant to enable the user to use all of GitHub’s features via the tool,  the user will be provided the flexibility to use the tool for Git operations alone, if he/she so chooses (for example, add, commit, branch, etc.). The tool's webpage maybe viewed [**here**](http://joelmoniz.com/git-manager/).
+  
+## The Git-Manager in an image  
+![The super-intuitive, friendly neighbourhood Git-Manager](data/toolbar/help_screen.png)
 
 ## Installation Instructions
 
