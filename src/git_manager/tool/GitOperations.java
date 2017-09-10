@@ -180,7 +180,7 @@ public class GitOperations {
 	// TODO: Ensure that repo name == sketchname
 	public void createGitIgnore() {
 	  InputStream sourceGitignore = this.getClass().getResourceAsStream(GITIGNORE_LOCATION);
-	  File destGitignore = new File(thisDir.getAbsolutePath() + "\\.gitignore");
+	  File destGitignore = new File(thisDir.getAbsolutePath(), ".gitignore");
 	  try {
 	    if (!destGitignore.exists()) {
 	      Files.copy(sourceGitignore, destGitignore.toPath());
