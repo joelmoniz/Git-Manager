@@ -237,10 +237,20 @@ public class GitOperations {
       configPanel.add(emailText);
       emailText.setText(email);
   
-      JOptionPane.showMessageDialog(new JFrame(), 
+      Object[] option = {"Ok", "Cancel"};
+      int n = JOptionPane.showOptionDialog(new JFrame(), 
                                     configPanel, "User details",
-                                    JOptionPane.PLAIN_MESSAGE, null);
-      
+				    JOptionPane.OK_CANCEL_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE, null,
+				    options, options[1]);
+     
+      if(n==JOptionPane.CANCEL_OPTION){
+      		JOption.showMessageDialog(new JFrame(), "Be aware:"
+					 + "User details are needed to user Git\n"
+					 + "You won't be able to use the Git before they are provided",
+					 JOptionPane.WARNING_MESSAGE);
+	      return;
+	}else if(n == JOptionPane.CANCEL_OPTION){
       name = nameText.getText();
       email = emailText.getText();
       
@@ -248,6 +258,7 @@ public class GitOperations {
         JOptionPane.showMessageDialog(new JFrame(), 
                                       "Neither the name nor the email address can be left blank", "Nopes",
                                       JOptionPane.ERROR_MESSAGE, null);   
+      }
       }
 	  }
 	  
